@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Case Discussion - MediConnect Pro{% endblock %}
+{% block content %}
+<h3 class="fw-bold mb-1">Case: {{ referral.patient.name }}</h3>
+<p class="text-muted mb-4">
+  {{ referral.from_doctor.user.name }} ({{ referral.from_doctor.specialty }})
+  <i class="bi bi-arrow-right mx-1"></i>
+  {{ referral.to_doctor.user.name }} ({{ referral.to_doctor.specialty }})
+  · <span class="badge badge-status-{{ 'pending' if referral.status=='pending' else ('confirmed' if referral.status=='accepted' else 'cancelled') }}">{{ referral.status|capitalize }}</span>
+</p>
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header"><i class="bi bi-shield-lock"></i> Private case discussion (doctors only)</div>
+      <div class="card-body" style="max-height:420px; overflow-y:auto;">
+        <div class="p-2 mb-3 bg-light rounded small">
+          <strong>Referral reason:</strong> {{ referral.reason }}
+        </div>
+        {% for note in referral.notes %}
+        <div class="chat-bubble {{ 'mine' if note.author_id == current_user.id else 'theirs' }}">
+          <div class="small fw-semibold">{{ note.author.name }}</div>
+          <div>{{ note.message }}</div>
+          <div class="small text-muted">{{ note.created_at.strftime('%d %b, %H:%M') }}</div>
+        </div>
+        {% else %}
+        <p class="text-muted small">No messages yet — start the discussion below.</p>
+        {% endfor %}
+      </div>
+      <div class="card-footer bg-white">
+        <form method="POST" class="d-flex gap-2">
+          <input type="text" name="message" class="form-control" placeholder="Write a note about this case..." required>
+          <button type="submit" class="btn btn-brand"><i class="bi bi-send"></i></button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header">Patient</div>
+      <div class="card-body">
+        <p class="mb-1"><strong>{{ referral.patient.name }}</strong></p>
+        <p class="small text-muted mb-3">{{ referral.patient.email }}</p>
+        <a href="{{ url_for('doctor.patient_history', patient_id=referral.patient_id) }}" class="btn btn-sm btn-outline-secondary w-100">
+          View Full History
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

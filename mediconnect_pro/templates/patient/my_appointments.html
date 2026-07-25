@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}My Appointments - MediConnect Pro{% endblock %}
+{% block content %}
+<h3 class="fw-bold mb-4">My Appointments</h3>
+
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>Doctor</th><th>Date</th><th>Time</th><th>Mode</th><th>Status</th><th>Prescription</th><th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in appointments %}
+        <tr>
+          <td>{{ a.doctor.user.name }}<br><small class="text-muted">{{ a.doctor.specialty }}</small></td>
+          <td>{{ a.date|nice_date }}</td>
+          <td>{{ a.start_time|time12 }}</td>
+          <td>{{ a.mode|capitalize }}</td>
+          <td><span class="badge badge-status-{{ a.status }}">{{ a.status|capitalize }}</span></td>
+          <td>
+            {% if a.prescription %}
+              <span class="small">{{ a.prescription[:60] }}{% if a.prescription|length > 60 %}…{% endif %}</span>
+            {% else %}
+              <span class="text-muted small">—</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if a.status in ['pending', 'confirmed'] %}
+            <form method="POST" action="{{ url_for('patient.cancel_appointment', appointment_id=a.id) }}" onsubmit="return confirm('Cancel this appointment?');">
+              <button class="btn btn-sm btn-outline-danger">Cancel</button>
+            </form>
+            {% endif %}
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="7" class="text-center text-muted py-4">No appointments yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

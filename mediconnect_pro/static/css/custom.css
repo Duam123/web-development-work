@@ -1,0 +1,85 @@
+:root {
+  --brand: #0f7d6f;
+  --brand-dark: #0b5c52;
+  --accent: #ffb84d;
+  --bg-soft: #f4f8f7;
+}
+
+body {
+  background: var(--bg-soft);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.app-navbar {
+  background: linear-gradient(90deg, var(--brand-dark), var(--brand));
+}
+.text-accent { color: var(--accent); }
+
+.role-badge { text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.05em; }
+.role-badge.role-patient { background: #3b82f6; }
+.role-badge.role-doctor { background: var(--accent); color: #3a2a00; }
+.role-badge.role-admin { background: #ef4444; }
+
+.card {
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(15, 125, 111, 0.08);
+}
+
+.card-header {
+  background: white;
+  border-bottom: 1px solid #eef2f1;
+  border-radius: 14px 14px 0 0 !important;
+  font-weight: 600;
+}
+
+.btn-brand {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: white;
+}
+.btn-brand:hover { background: var(--brand-dark); border-color: var(--brand-dark); color: white; }
+
+.stat-card {
+  border-radius: 14px;
+  padding: 1.4rem;
+  background: white;
+  box-shadow: 0 4px 18px rgba(15, 125, 111, 0.08);
+}
+.stat-card .stat-value { font-size: 2rem; font-weight: 700; color: var(--brand-dark); }
+.stat-card .stat-label { color: #6b7a78; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; }
+
+.slot-btn { min-width: 84px; }
+
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--brand-dark), var(--brand) 60%, #14b8a6);
+}
+.auth-card {
+  background: white;
+  border-radius: 18px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+}
+
+.doctor-card { transition: transform 0.15s ease; }
+.doctor-card:hover { transform: translateY(-3px); }
+
+.badge-status-pending { background: #f59e0b; }
+.badge-status-confirmed { background: #3b82f6; }
+.badge-status-completed { background: #10b981; }
+.badge-status-cancelled { background: #6b7280; }
+
+.chat-bubble {
+  border-radius: 12px;
+  padding: 0.65rem 1rem;
+  margin-bottom: 0.6rem;
+  max-width: 75%;
+}
+.chat-bubble.mine { background: #d1f5ec; margin-left: auto; }
+.chat-bubble.theirs { background: #eef2f1; }

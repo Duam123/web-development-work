@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Referrals - MediConnect Pro{% endblock %}
+{% block content %}
+<h3 class="fw-bold mb-4">Referrals</h3>
+
+<div class="row">
+  <div class="col-md-6 mb-3">
+    <div class="card">
+      <div class="card-header">Incoming — cases referred to you</div>
+      <div class="list-group list-group-flush">
+        {% for r in incoming %}
+        <div class="list-group-item">
+          <div class="d-flex justify-content-between">
+            <strong>{{ r.patient.name }}</strong>
+            <span class="badge badge-status-{{ 'pending' if r.status=='pending' else ('confirmed' if r.status=='accepted' else 'cancelled') }}">{{ r.status|capitalize }}</span>
+          </div>
+          <p class="small text-muted mb-1">From {{ r.from_doctor.user.name }} ({{ r.from_doctor.specialty }})</p>
+          <p class="small mb-2">{{ r.reason }}</p>
+          {% if r.status == 'pending' %}
+          <div class="d-flex gap-2">
+            <form method="POST" action="{{ url_for('doctor.respond_referral', referral_id=r.id) }}">
+              <input type="hidden" name="action" value="accept">
+              <button class="btn btn-sm btn-brand">Accept</button>
+            </form>
+            <form method="POST" action="{{ url_for('doctor.respond_referral', referral_id=r.id) }}">
+              <input type="hidden" name="action" value="decline">
+              <button class="btn btn-sm btn-outline-danger">Decline</button>
+            </form>
+          </div>
+          {% else %}
+          <a href="{{ url_for('doctor.case_thread', referral_id=r.id) }}" class="btn btn-sm btn-outline-secondary">
+            <i class="bi bi-chat-dots"></i> Case Discussion
+          </a>
+          {% endif %}
+        </div>
+        {% else %}
+        <div class="list-group-item text-muted">No incoming referrals.</div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 mb-3">
+    <div class="card">
+      <div class="card-header">Outgoing — cases you've referred</div>
+      <div class="list-group list-group-flush">
+        {% for r in outgoing %}
+        <div class="list-group-item">
+          <div class="d-flex justify-content-between">
+            <strong>{{ r.patient.name }}</strong>
+            <span class="badge badge-status-{{ 'pending' if r.status=='pending' else ('confirmed' if r.status=='accepted' else 'cancelled') }}">{{ r.status|capitalize }}</span>
+          </div>
+          <p class="small text-muted mb-1">To {{ r.to_doctor.user.name }} ({{ r.to_doctor.specialty }})</p>
+          <p class="small mb-2">{{ r.reason }}</p>
+          <a href="{{ url_for('doctor.case_thread', referral_id=r.id) }}" class="btn btn-sm btn-outline-secondary">
+            <i class="bi bi-chat-dots"></i> Case Discussion
+          </a>
+        </div>
+        {% else %}
+        <div class="list-group-item text-muted">No outgoing referrals.</div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}{{ patient.name }} - Patient History{% endblock %}
+{% block content %}
+<h3 class="fw-bold mb-1">{{ patient.name }}</h3>
+<p class="text-muted mb-4">{{ patient.email }}</p>
+
+<div class="row">
+  <div class="col-md-7 mb-3">
+    <div class="card">
+      <div class="card-header">Completed Visit History</div>
+      <div class="list-group list-group-flush">
+        {% for a in history %}
+        <div class="list-group-item">
+          <div class="d-flex justify-content-between">
+            <strong>{{ a.doctor.user.name }}</strong>
+            <span class="text-muted small">{{ a.date|nice_date }}</span>
+          </div>
+          <p class="small text-muted mb-1">{{ a.doctor.specialty }} · {{ a.reason or 'No reason given' }}</p>
+          {% if a.prescription %}
+            <p class="small mb-0"><strong>Rx:</strong> {{ a.prescription }}</p>
+          {% endif %}
+        </div>
+        {% else %}
+        <div class="list-group-item text-muted">No completed visits on record yet.</div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-5">
+    <div class="card">
+      <div class="card-header"><i class="bi bi-people-fill"></i> Refer to another doctor</div>
+      <div class="card-body">
+        <form method="POST" action="{{ url_for('doctor.refer_patient', patient_id=patient.id) }}">
+          <div class="mb-3">
+            <label class="form-label">Refer to</label>
+            <select name="to_doctor_id" class="form-select" required>
+              <option value="" disabled selected>Choose a doctor...</option>
+              {% for d in other_doctors %}
+                <option value="{{ d.id }}">{{ d.user.name }} — {{ d.specialty }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Reason for referral</label>
+            <textarea name="reason" rows="3" class="form-control" placeholder="e.g. Suspected arrhythmia, needs cardiology review" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-brand w-100">Send Referral</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Manage Users - MediConnect Pro{% endblock %}
+{% block content %}
+<h3 class="fw-bold mb-4">All Users</h3>
+
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr><th>Name</th><th>Email</th><th>Role</th><th>Joined</th></tr>
+      </thead>
+      <tbody>
+        {% for u in users %}
+        <tr>
+          <td>{{ u.name }}</td>
+          <td>{{ u.email }}</td>
+          <td><span class="badge role-badge role-{{ u.role }}">{{ u.role|capitalize }}</span></td>
+          <td>{{ u.created_at.strftime('%d %b %Y') }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4" class="text-center text-muted py-4">No users yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

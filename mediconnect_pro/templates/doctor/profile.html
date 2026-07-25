@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}My Profile - MediConnect Pro{% endblock %}
+{% block content %}
+<h3 class="fw-bold mb-4">My Profile</h3>
+
+<div class="card" style="max-width:640px;">
+  <div class="card-body">
+    <form method="POST">
+      <div class="mb-3">
+        <label class="form-label">Specialty</label>
+        <input type="text" name="specialty" class="form-control" value="{{ profile.specialty }}">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">City</label>
+        <input type="text" name="city" class="form-control" value="{{ profile.city }}">
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Years of Experience</label>
+          <input type="number" min="0" name="experience_years" class="form-control" value="{{ profile.experience_years }}">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Consultation Fee (Rs.)</label>
+          <input type="number" min="0" name="consultation_fee" class="form-control" value="{{ profile.consultation_fee }}">
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Bio</label>
+        <textarea name="bio" rows="4" class="form-control">{{ profile.bio }}</textarea>
+      </div>
+      <button type="submit" class="btn btn-brand">Save Changes</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

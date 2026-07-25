@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Find a Doctor - MediConnect Pro{% endblock %}
+{% block content %}
+<h3 class="fw-bold mb-4">Find a Doctor</h3>
+
+<form method="GET" class="row g-2 mb-4">
+  <div class="col-md-4">
+    <select name="specialty" class="form-select">
+      <option value="">All Specialties</option>
+      {% for s in specialties %}
+        <option value="{{ s }}" {% if s == current_specialty %}selected{% endif %}>{{ s }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-4">
+    <input type="text" name="city" class="form-control" placeholder="City" value="{{ current_city }}">
+  </div>
+  <div class="col-md-2">
+    <button type="submit" class="btn btn-brand w-100"><i class="bi bi-search"></i> Search</button>
+  </div>
+</form>
+
+<div class="row g-3">
+  {% for d in doctors %}
+  <div class="col-md-4">
+    <div class="card doctor-card h-100">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <h5 class="card-title mb-1">{{ d.user.name }}</h5>
+          {% if d.verified %}<i class="bi bi-patch-check-fill text-primary" title="Verified"></i>{% endif %}
+        </div>
+        <p class="text-muted mb-2">{{ d.specialty }} · {{ d.city }}</p>
+        <p class="small mb-2"><i class="bi bi-star-fill text-warning"></i> {{ d.rating }} · {{ d.experience_years }} yrs experience</p>
+        <p class="small text-muted">{{ d.bio[:110] }}{% if d.bio|length > 110 %}…{% endif %}</p>
+        <p class="fw-semibold">Rs. {{ d.consultation_fee }} / visit</p>
+        <a href="{{ url_for('patient.book_appointment', doctor_id=d.id) }}" class="btn btn-brand w-100">Book Appointment</a>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <p class="text-muted">No doctors match that search yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

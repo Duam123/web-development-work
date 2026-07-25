@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Book Appointment - MediConnect Pro{% endblock %}
+{% block content %}
+<h3 class="fw-bold mb-1">Book with {{ doctor.user.name }}</h3>
+<p class="text-muted mb-4">{{ doctor.specialty }} · {{ doctor.city }} · Rs. {{ doctor.consultation_fee }}/visit</p>
+
+<div class="row">
+  <div class="col-md-4 mb-3">
+    <div class="card">
+      <div class="card-header">Choose a date</div>
+      <div class="list-group list-group-flush" style="max-height:420px; overflow-y:auto;">
+        {% for d in date_options %}
+        <a href="{{ url_for('patient.book_appointment', doctor_id=doctor.id, date=d.isoformat()) }}"
+           class="list-group-item list-group-item-action {% if d == selected_date %}active{% endif %}">
+          {{ d|nice_date }}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header">Available slots — {{ selected_date|nice_date }}</div>
+      <div class="card-body">
+        {% if slots %}
+        <form method="POST">
+          <input type="hidden" name="date" value="{{ selected_date.isoformat() }}">
+          <div class="mb-3 d-flex flex-wrap gap-2">
+            {% for start, end in slots %}
+            <input type="radio" class="btn-check" name="start_time" id="slot_{{ loop.index }}" value="{{ start.strftime('%H:%M') }}" required>
+            <label class="btn btn-outline-success slot-btn" for="slot_{{ loop.index }}">{{ start.strftime('%H:%M') }}</label>
+            {% endfor %}
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Mode</label>
+              <select name="mode" class="form-select">
+                <option value="physical">Physical (In-clinic)</option>
+                <option value="online">Online (Video)</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Reason for visit (optional)</label>
+              <input type="text" name="reason" class="form-control" placeholder="e.g. Follow-up, chest pain...">
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-brand px-4">Confirm Booking Request</button>
+        </form>
+        {% else %}
+        <p class="text-muted mb-0">No available slots on this date. Try another day.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

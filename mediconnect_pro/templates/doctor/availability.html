@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Availability - MediConnect Pro{% endblock %}
+{% block content %}
+<h3 class="fw-bold mb-4">Weekly Availability</h3>
+
+<div class="row">
+  <div class="col-md-5 mb-3">
+    <div class="card">
+      <div class="card-header">Add a working window</div>
+      <div class="card-body">
+        <form method="POST">
+          <div class="mb-3">
+            <label class="form-label">Day of week</label>
+            <select name="weekday" class="form-select" required>
+              {% for i in range(7) %}
+                <option value="{{ i }}">{{ weekday_names[i] }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="row">
+            <div class="col-6 mb-3">
+              <label class="form-label">Start time</label>
+              <input type="time" name="start_time" class="form-control" value="09:00" required>
+            </div>
+            <div class="col-6 mb-3">
+              <label class="form-label">End time</label>
+              <input type="time" name="end_time" class="form-control" value="13:00" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Slot length (minutes)</label>
+            <select name="slot_minutes" class="form-select">
+              <option value="15">15</option>
+              <option value="20">20</option>
+              <option value="30" selected>30</option>
+              <option value="45">45</option>
+              <option value="60">60</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-brand w-100">Add Window</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-7">
+    <div class="card">
+      <div class="card-header">Current windows</div>
+      <div class="list-group list-group-flush">
+        {% for w in windows %}
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ weekday_names[w.weekday] }}</strong>
+            <span class="text-muted">{{ w.start_time.strftime('%H:%M') }} – {{ w.end_time.strftime('%H:%M') }}</span>
+            <span class="badge bg-light text-dark border">{{ w.slot_minutes }} min slots</span>
+          </div>
+          <form method="POST" action="{{ url_for('doctor.delete_availability', window_id=w.id) }}">
+            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+          </form>
+        </div>
+        {% else %}
+        <div class="list-group-item text-muted">No availability set yet — patients won't be able to book you until you add some.</div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

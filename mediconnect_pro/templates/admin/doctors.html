@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Manage Doctors - MediConnect Pro{% endblock %}
+{% block content %}
+<h3 class="fw-bold mb-4">Manage Doctors</h3>
+
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr><th>Name</th><th>Specialty</th><th>City</th><th>Experience</th><th>Status</th><th></th></tr>
+      </thead>
+      <tbody>
+        {% for d in doctors %}
+        <tr>
+          <td>{{ d.user.name }}<br><small class="text-muted">{{ d.user.email }}</small></td>
+          <td>{{ d.specialty }}</td>
+          <td>{{ d.city }}</td>
+          <td>{{ d.experience_years }} yrs</td>
+          <td>
+            {% if d.verified %}
+              <span class="badge bg-primary">Verified</span>
+            {% else %}
+              <span class="badge bg-warning text-dark">Pending</span>
+            {% endif %}
+          </td>
+          <td>
+            <form method="POST" action="{{ url_for('admin.toggle_verify', doctor_id=d.id) }}">
+              <button class="btn btn-sm {{ 'btn-outline-danger' if d.verified else 'btn-brand' }}">
+                {{ 'Unverify' if d.verified else 'Verify' }}
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6" class="text-center text-muted py-4">No doctors registered yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Patient Dashboard - MediConnect Pro{% endblock %}
+{% block content %}
+<h3 class="fw-bold mb-1">Welcome back, {{ current_user.name.split(' ')[0] }} 👋</h3>
+<p class="text-muted mb-4">Here's what's coming up.</p>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="stat-card">
+      <div class="stat-value">{{ upcoming|length }}</div>
+      <div class="stat-label">Upcoming Appointments</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="stat-card">
+      <div class="stat-value">{{ total_appointments }}</div>
+      <div class="stat-label">Total Appointments</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <a href="{{ url_for('patient.search_doctors') }}" class="stat-card d-block text-decoration-none text-dark">
+      <div class="stat-value"><i class="bi bi-search"></i></div>
+      <div class="stat-label">Find a Doctor</div>
+    </a>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">Upcoming Appointments</div>
+  <div class="card-body">
+    {% if upcoming %}
+      <div class="list-group list-group-flush">
+        {% for a in upcoming %}
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ a.doctor.user.name }}</strong> <span class="text-muted">· {{ a.doctor.specialty }}</span><br>
+            <small class="text-muted">{{ a.date|nice_date }} at {{ a.start_time|time12 }} · {{ a.mode|capitalize }}</small>
+          </div>
+          <span class="badge badge-status-{{ a.status }}">{{ a.status|capitalize }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-muted mb-0">No upcoming appointments yet. <a href="{{ url_for('patient.search_doctors') }}">Find a doctor</a> to book one.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

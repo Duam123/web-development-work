@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Doctor Dashboard - MediConnect Pro{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-1">
+  <h3 class="fw-bold mb-0">Welcome, {{ current_user.name }}</h3>
+  {% if not profile.verified %}
+    <span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split"></i> Pending admin verification</span>
+  {% else %}
+    <span class="badge bg-primary"><i class="bi bi-patch-check-fill"></i> Verified</span>
+  {% endif %}
+</div>
+<p class="text-muted mb-4">{{ profile.specialty }} · {{ profile.city }}</p>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="stat-card">
+      <div class="stat-value">{{ todays_appointments|length }}</div>
+      <div class="stat-label">Today's Appointments</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <a href="{{ url_for('doctor.appointments', status='pending') }}" class="stat-card d-block text-decoration-none text-dark">
+      <div class="stat-value">{{ pending_count }}</div>
+      <div class="stat-label">Pending Requests</div>
+    </a>
+  </div>
+  <div class="col-md-4">
+    <a href="{{ url_for('doctor.referrals') }}" class="stat-card d-block text-decoration-none text-dark">
+      <div class="stat-value">{{ incoming_referrals }}</div>
+      <div class="stat-label">Incoming Referrals</div>
+    </a>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">Today's Schedule</div>
+  <div class="card-body">
+    {% if todays_appointments %}
+      <div class="list-group list-group-flush">
+        {% for a in todays_appointments %}
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ a.patient.name }}</strong><br>
+            <small class="text-muted">{{ a.start_time|time12 }} · {{ a.mode|capitalize }} · {{ a.reason or 'No reason given' }}</small>
+          </div>
+          <span class="badge badge-status-{{ a.status }}">{{ a.status|capitalize }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-muted mb-0">No appointments scheduled for today.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
