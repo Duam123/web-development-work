@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCore Health | International Premium Healthcare</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            DEFAULT: '#0A1628',
+                            light: '#13243C',
+                            dark: '#050B14'
+                        },
+                        glacier: '#F0F6FF',
+                        teal: {
+                            DEFAULT: '#00C9B1',
+                            dark: '#00A38F'
+                        },
+                        coral: '#FF6B6B',
+                        slate: '#64748B'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Signature Element: Drawing Heartbeat SVG */
+        @keyframes draw-heartbeat {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        .heartbeat-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw-heartbeat 4s ease-in-out infinite;
+        }
+        /* Custom Glassmorphism */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .glass-dark {
+            background: rgba(10, 22, 40, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F0F6FF;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00C9B1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-glacier font-sans text-navy antialiased min-h-screen flex flex-col">
+
+    <header class="sticky top-0 z-50 glass-card border-b border-blue-100">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#home" onclick="navigateTo('home')" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-navy to-teal flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
+                    <i data-lucide="activity" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <span class="font-serif text-2xl font-bold tracking-tight text-navy">MediCore</span>
+                    <span class="font-mono text-[10px] block text-teal font-bold tracking-widest uppercase -mt-1">Health</span>
+                </div>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-8 font-medium">
+                <a href="#home" onclick="navigateTo('home')" class="nav-link text-navy hover:text-teal transition-colors">Home</a>
+                <a href="#doctors" onclick="navigateTo('doctors')" class="nav-link text-slate hover:text-teal transition-colors">Find Doctors</a>
+                <a href="#services" onclick="navigateTo('services')" class="nav-link text-slate hover:text-teal transition-colors">Services</a>
+                <a href="#booking" onclick="navigateTo('booking')" class="nav-link text-slate hover:text-teal transition-colors">Book Appointment</a>
+                <a href="#dashboard" onclick="navigateTo('dashboard')" class="nav-link text-slate hover:text-teal transition-colors flex items-center gap-1">
+                    Dashboard <span class="bg-coral text-white text-[10px] px-1.5 py-0.5 rounded-full font-mono" id="nav-count">0</span>
+                </a>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <a href="#booking" onclick="navigateTo('booking')" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-teal text-white hover:bg-teal-dark font-medium transition-all shadow-lg shadow-teal/20 hover:-translate-y-0.5">
+                    Book Global Consult
+                </a>
+                <button onclick="toggleMobileMenu()" class="p-2 md:hidden hover:bg-blue-50 rounded-lg text-navy">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden glass-card border-b border-blue-100 absolute w-full left-0 px-6 py-4 flex flex-col gap-4 shadow-lg">
+            <a href="#home" onclick="navigateTo('home'); toggleMobileMenu()" class="py-2 text-navy font-medium border-b border-gray-100">Home</a>
+            <a href="#doctors" onclick="navigateTo('doctors'); toggleMobileMenu()" class="py-2 text-navy font-medium border-b border-gray-100">Find Doctors</a>
+            <a href="#services" onclick="navigateTo('services'); toggleMobileMenu()" class="py-2 text-navy font-medium border-b border-gray-100">Services</a>
+            <a href="#booking" onclick="navigateTo('booking'); toggleMobileMenu()" class="py-2 text-navy font-medium border-b border-gray-100">Book Appointment</a>
+            <a href="#dashboard" onclick="navigateTo('dashboard'); toggleMobileMenu()" class="py-2 text-navy font-medium flex items-center justify-between">
+                <span>Patient Dashboard</span>
+                <span class="bg-coral text-white text-xs px-2 py-0.5 rounded-full font-mono" id="mobile-nav-count">0</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        
+        <section id="page-home" class="spa-page">
+            <div class="relative bg-navy text-white overflow-hidden py-24 lg:py-32">
+                <div class="absolute inset-0 opacity-10">
+                    <div class="absolute top-1/4 left-10 w-96 h-96 bg-teal rounded-full filter blur-[120px]"></div>
+                    <div class="absolute bottom-1/4 right-10 w-96 h-96 bg-coral rounded-full filter blur-[120px]"></div>
+                </div>
+
+                <div class="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-7 space-y-8">
+                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-dark text-teal border border-teal/20">
+                            <span class="w-2 h-2 rounded-full bg-teal animate-ping"></span>
+                            <span class="font-mono text-xs tracking-wider uppercase">Direct Access to Global Specialists</span>
+                        </div>
+                        <h1 class="font-serif text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-none text-white">
+                            Where Elite Medical <br>
+                            <span class="italic text-transparent bg-clip-text bg-gradient-to-r from-teal via-teal-300 to-glacier">Expertise Meets</span> You.
+                        </h1>
+                        <p class="text-slate text-lg max-w-xl">
+                            Consolidating premium international healthcare under a singular borderless ecosystem. Book directly with accredited experts worldwide.
+                        </p>
+
+                        <div class="grid grid-cols-3 gap-6 pt-6 border-t border-white/10">
+                            <div>
+                                <span class="font-mono text-3xl font-bold text-teal block">48<span class="text-xs text-coral">HRS</span></span>
+                                <span class="text-xs text-slate uppercase tracking-wider">Avg. Placement Time</span>
+                            </div>
+                            <div>
+                                <span class="font-mono text-3xl font-bold text-white block">99.4<span class="text-teal text-xs">%</span></span>
+                                <span class="text-xs text-slate uppercase tracking-wider">Satisfaction Index</span>
+                            </div>
+                            <div>
+                                <span class="font-mono text-3xl font-bold text-white block">140<span class="text-teal text-xs">+</span></span>
+                                <span class="text-xs text-slate uppercase tracking-wider">Global Affiliations</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 h-16 w-full max-w-md relative">
+                            <svg class="w-full h-full" viewBox="0 0 400 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path class="heartbeat-path" d="M 0 50 L 120 50 L 130 35 L 140 65 L 150 50 L 180 50 L 190 20 L 205 85 L 215 50 L 240 50 L 245 45 L 250 55 L 255 50 L 400 50" stroke="#00C9B1" stroke-width="3" stroke-linecap="round" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 relative">
+                        <div class="relative z-10 glass-card p-8 rounded-3xl shadow-2xl border border-white/40 text-navy">
+                            <h3 class="font-serif text-2xl font-bold mb-2">Initiate Care Protocol</h3>
+                            <p class="text-slate text-sm mb-6">Receive curated practitioner recommendations in real-time.</p>
+                            
+                            <form id="hero-quick-book" class="space-y-4" onsubmit="handleQuickBook(event)">
+                                <div>
+                                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate mb-1">Medical Specialization</label>
+                                    <select id="hero-specialty" class="w-full px-4 py-3 rounded-xl border border-blue-100 focus:border-teal focus:ring-1 focus:ring-teal outline-none transition-all bg-white" required>
+                                        <option value="">Select Department...</option>
+                                        <option value="Cardiology">Cardiology</option>
+                                        <option value="Neurology">Neurology</option>
+                                        <option value="Oncology">Oncology</option>
+                                        <option value="Pediatrics">Pediatrics</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate mb-1">Preferred Location Hub</label>
+                                    <select id="hero-location" class="w-full px-4 py-3 rounded-xl border border-blue-100 focus:border-teal focus:ring-1 focus:ring-teal outline-none transition-all bg-white" required>
+                                        <option value="">Select Geographic hub...</option>
+                                        <option value="London, UK">London, UK</option>
+                                        <option value="Geneva, Switzerland">Geneva, Switzerland</option>
+                                        <option value="Boston, USA">Boston, USA</option>
+                                        <option value="Singapore">Singapore</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="w-full py-4 rounded-xl bg-navy text-white hover:bg-teal hover:text-navy font-bold transition-all flex items-center justify-center gap-2 shadow-lg">
+                                    Continue Match Engine <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-coral rounded-full mix-blend-multiply filter blur-2xl opacity-30 animate-pulse"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-6 -mt-10 relative z-20">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="glass-card p-8 rounded-2xl shadow-xl hover:-translate-y-2 transition-transform border border-white">
+                        <div class="w-12 h-12 bg-teal/10 text-teal rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="globe" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="font-serif text-xl font-bold mb-2 text-navy">Global Care Credentials</h4>
+                        <p class="text-slate text-sm">Every single physician is board-certified internationally across leading global hubs.</p>
+                    </div>
+                    <div class="glass-card p-8 rounded-2xl shadow-xl hover:-translate-y-2 transition-transform border border-white">
+                        <div class="w-12 h-12 bg-coral/10 text-coral rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="video" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="font-serif text-xl font-bold mb-2 text-navy">High-Definition Telehealth</h4>
+                        <p class="text-slate text-sm">Pre-consult with your surgeon or medical physician using end-to-end encrypted rooms.</p>
+                    </div>
+                    <div class="glass-card p-8 rounded-2xl shadow-xl hover:-translate-y-2 transition-transform border border-white">
+                        <div class="w-12 h-12 bg-navy/10 text-navy rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="shield-check" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="font-serif text-xl font-bold mb-2 text-navy">HIPAA & GDPR Secure</h4>
+                        <p class="text-slate text-sm">Your diagnostic metrics are stored via state-of-the-art secure decentralized medical data protocols.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-6 py-20 text-center">
+                <p class="font-mono text-xs text-slate uppercase tracking-widest mb-6">Accredited by Elite Global Regulatory Frameworks</p>
+                <div class="flex flex-wrap justify-center items-center gap-12 opacity-60">
+                    <span class="font-serif text-xl font-bold text-navy/80">SwissMedic Verified</span>
+                    <span class="font-serif text-xl font-bold text-navy/80">Joint Commission International</span>
+                    <span class="font-serif text-xl font-bold text-navy/80">FDA Cleared Protocols</span>
+                    <span class="font-serif text-xl font-bold text-navy/80">NHS Trust Partner</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-doctors" class="spa-page hidden py-16">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold mb-4">The Global Medical Council</h2>
+                    <p class="text-slate">Instantly connect with world-leading specialists across key continental hospital nodes.</p>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl shadow-md border border-white/60 mb-8 flex flex-wrap gap-4 items-center justify-between">
+                    <div class="flex flex-wrap gap-4 flex-1">
+                        <div class="min-w-[200px]">
+                            <select id="filter-specialty" onchange="applyDoctorFilters()" class="w-full px-4 py-2.5 rounded-xl border border-blue-100 outline-none focus:border-teal">
+                                <option value="All">All Specializations</option>
+                                <option value="Cardiology">Cardiology</option>
+                                <option value="Neurology">Neurology</option>
+                                <option value="Oncology">Oncology</option>
+                                <option value="Pediatrics">Pediatrics</option>
+                            </select>
+                        </div>
+                        <div class="min-w-[200px]">
+                            <select id="filter-hub" onchange="applyDoctorFilters()" class="w-full px-4 py-2.5 rounded-xl border border-blue-100 outline-none focus:border-teal">
+                                <option value="All">All Medical Hubs</option>
+                                <option value="Geneva">Geneva Hub</option>
+                                <option value="Boston">Boston Hub</option>
+                                <option value="London">London Hub</option>
+                                <option value="Singapore">Singapore Hub</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="text-sm font-mono text-slate" id="results-counter">
+                        Displaying 4 active specialists
+                    </div>
+                </div>
+
+                <div id="doctor-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    </div>
+            </div>
+        </section>
+
+        <section id="page-booking" class="spa-page hidden py-16">
+            <div class="max-w-4xl mx-auto px-6">
+                <div class="glass-card p-8 md:p-12 rounded-3xl shadow-2xl border border-white">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 bg-teal/10 text-teal rounded-2xl flex items-center justify-center">
+                            <i data-lucide="calendar" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <span class="font-mono text-xs uppercase text-teal font-bold tracking-widest">Digital Care Intake</span>
+                            <h2 class="font-serif text-3xl font-bold text-navy">Premium Booking Console</h2>
+                        </div>
+                    </div>
+
+                    <form id="main-booking-form" onsubmit="handleFinalBooking(event)" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-navy mb-2">Select Your Specialist</label>
+                            <select id="booking-doctor" class="w-full px-4 py-3 rounded-xl border border-blue-100 focus:border-teal focus:ring-1 focus:ring-teal outline-none bg-white transition-all" required>
+                                </select>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-navy mb-2">Full Legal Name</label>
+                                <input type="text" id="booking-name" placeholder="Johnathan Doe" class="w-full px-4 py-3 rounded-xl border border-blue-100 focus:border-teal focus:ring-1 focus:ring-teal outline-none bg-white transition-all" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-navy mb-2">Email Address</label>
+                                <input type="email" id="booking-email" placeholder="john@domain.com" class="w-full px-4 py-3 rounded-xl border border-blue-100 focus:border-teal focus:ring-1 focus:ring-teal outline-none bg-white transition-all" required>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-navy mb-2">Proposed Consultation Date</label>
+                                <input type="date" id="booking-date" class="w-full px-4 py-3 rounded-xl border border-blue-100 focus:border-teal focus:ring-1 focus:ring-teal outline-none bg-white transition-all" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-navy mb-2">Preferred Time Slot</label>
+                                <select id="booking-time" class="w-full px-4 py-3 rounded-xl border border-blue-100 focus:border-teal focus:ring-1 focus:ring-teal outline-none bg-white transition-all" required>
+                                    <option value="09:00 - 10:00 (GMT)">09:00 - 10:00 (GMT)</option>
+                                    <option value="11:30 - 12:30 (GMT)">11:30 - 12:30 (GMT)</option>
+                                    <option value="14:00 - 15:00 (GMT)">14:00 - 15:00 (GMT)</option>
+                                    <option value="16:30 - 17:30 (GMT)">16:30 - 17:30 (GMT)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-navy mb-2">Consultation Node</label>
+                                <select id="booking-mode" class="w-full px-4 py-3 rounded-xl border border-blue-100 focus:border-teal focus:ring-1 focus:ring-teal outline-none bg-white transition-all" required>
+                                    <option value="Encrypted Video Link">Encrypted Video Link</option>
+                                    <option value="In-Person Clinical Hub">In-Person Clinical Hub</option>
+                                    <option value="Digital Second Opinion Audit">Digital Second Opinion Audit</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-navy mb-2">Brief Clinical Indication (Strictly Private)</label>
+                            <textarea id="booking-symptoms" rows="3" placeholder="Provide background clinical history or specific diagnostic reviews required..." class="w-full px-4 py-3 rounded-xl border border-blue-100 focus:border-teal focus:ring-1 focus:ring-teal outline-none bg-white transition-all"></textarea>
+                        </div>
+
+                        <div class="flex items-start gap-3 bg-blue-50/50 p-4 rounded-xl">
+                            <input type="checkbox" id="booking-terms" class="mt-1 accent-teal" required>
+                            <label for="booking-terms" class="text-xs text-slate">
+                                I verify this consultation complies with international medical care policies and data acts. I consent to secure encrypted file uploads during clinical triage.
+                            </label>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 rounded-xl bg-teal text-white hover:bg-teal-dark font-bold transition-all shadow-lg shadow-teal/20 flex items-center justify-center gap-2">
+                            Secure Consult Placement <i data-lucide="check" class="w-5 h-5"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-dashboard" class="spa-page hidden py-16">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10 pb-8 border-b border-blue-100">
+                    <div>
+                        <span class="font-mono text-xs uppercase text-teal font-bold tracking-widest">Active Triages</span>
+                        <h2 class="font-serif text-4xl font-bold text-navy">Private Patient Portal</h2>
+                    </div>
+                    <div class="flex items-center gap-3 bg-white px-4 py-2.5 rounded-full shadow-sm">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span class="font-mono text-xs text-navy font-bold">Secure Gateway Connected</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-1 space-y-8">
+                        <div class="glass-card p-6 rounded-2xl shadow-md border border-white">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-16 h-16 rounded-full bg-navy text-white flex items-center justify-center font-serif text-2xl font-bold">
+                                    PD
+                                </div>
+                                <div>
+                                    <h3 class="font-serif text-xl font-bold text-navy" id="dash-profile-name">Patient Account</h3>
+                                    <p class="text-xs font-mono text-teal tracking-wide" id="dash-profile-id">ID: MC-793-294</p>
+                                </div>
+                            </div>
+                            <div class="space-y-3 text-sm border-t border-blue-50 pt-4">
+                                <div class="flex justify-between"><span class="text-slate">Coverage Status:</span> <span class="font-bold text-emerald-600">Global Elite Med</span></div>
+                                <div class="flex justify-between"><span class="text-slate">Triage Priority:</span> <span class="font-bold text-coral">Tier 1 Elite</span></div>
+                                <div class="flex justify-between"><span class="text-slate">Data Protocol:</span> <span class="font-mono text-xs">HIPAA Encrypted</span></div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-2xl shadow-md border border-white space-y-4">
+                            <h4 class="font-serif text-lg font-bold text-navy mb-2">Verified Health Parameters</h4>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-blue-50/50 p-4 rounded-xl">
+                                    <span class="text-xs text-slate block">Blood Group</span>
+                                    <span class="font-mono text-xl font-bold text-navy">O-Positive</span>
+                                </div>
+                                <div class="bg-blue-50/50 p-4 rounded-xl">
+                                    <span class="text-xs text-slate block">Heart Rate</span>
+                                    <span class="font-mono text-xl font-bold text-emerald-600">68 BPM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2 space-y-6">
+                        <div class="glass-card p-8 rounded-2xl shadow-md border border-white min-h-[400px]">
+                            <h3 class="font-serif text-2xl font-bold text-navy mb-6 flex items-center justify-between">
+                                Registered Care Appointments
+                                <span class="bg-navy text-teal font-mono text-xs px-3 py-1 rounded-full font-bold" id="dash-record-count">0 Sessions</span>
+                            </h3>
+
+                            <div id="dashboard-empty" class="flex flex-col items-center justify-center py-16 text-center">
+                                <div class="w-16 h-16 rounded-full bg-blue-50 text-blue-300 flex items-center justify-center mb-4">
+                                    <i data-lucide="folder-open" class="w-8 h-8"></i>
+                                </div>
+                                <p class="text-navy font-bold">No Consultations Set Up</p>
+                                <p class="text-slate text-sm max-w-sm mt-1">Book your expert clinical consult using our dynamic booking engine.</p>
+                                <a href="#booking" onclick="navigateTo('booking')" class="mt-6 px-6 py-2.5 bg-teal text-white font-medium rounded-full hover:bg-teal-dark transition-all shadow-md">
+                                    Access Booking Desk
+                                </a>
+                            </div>
+
+                            <div id="appointments-list" class="space-y-4 hidden">
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-services" class="spa-page hidden py-16">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <span class="font-mono text-xs uppercase text-teal font-bold tracking-widest">Global Competence</span>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold mb-4">International Care Paradigms</h2>
+                    <p class="text-slate">Integrating highly specialized hospital tracks within a unified operational ecosystem.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-2xl border border-blue-50 hover:shadow-xl transition-all">
+                        <div class="w-12 h-12 bg-rose-50 text-rose-500 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="heart" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold mb-3">Cardiovascular Medicine</h3>
+                        <p class="text-slate text-sm mb-4">State-of-the-art telemetry, non-invasive imaging analysis, and structural valve triaging with Geneva-accredited teams.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl border border-blue-50 hover:shadow-xl transition-all">
+                        <div class="w-12 h-12 bg-indigo-50 text-indigo-500 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="brain" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold mb-3">Advanced Neurological Sciences</h3>
+                        <p class="text-slate text-sm mb-4">Translational diagnostics addressing neuromuscular pathologies, stereotactic pathways, and localized tremor neuro-treatments.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl border border-blue-50 hover:shadow-xl transition-all">
+                        <div class="w-12 h-12 bg-amber-50 text-amber-500 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="dna" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold mb-3">Precision Oncology</h3>
+                        <p class="text-slate text-sm mb-4">Genomics-driven cancer therapy structuring. Molecular profiling mapping, immunotherapeutic plans, and clinical trials.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-navy text-white border-t border-white/10 pt-16 pb-8 mt-24">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <div class="space-y-4">
+                <a href="#home" onclick="navigateTo('home')" class="flex items-center gap-2">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-navy to-teal flex items-center justify-center text-white shadow-md">
+                        <i data-lucide="activity" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <span class="font-serif text-2xl font-bold tracking-tight text-white">MediCore</span>
+                        <span class="font-mono text-[10px] block text-teal font-bold tracking-widest uppercase -mt-1">Health</span>
+                    </div>
+                </a>
+                <p class="text-xs text-slate">Consolidating the world's most elite medical resources. Delivering trust, efficiency, and clinical accuracy instantly.</p>
+            </div>
+            <div>
+                <h5 class="font-mono text-xs uppercase tracking-wider text-teal font-bold mb-4">Patient Links</h5>
+                <ul class="space-y-2 text-sm text-slate">
+                    <li><a href="#home" onclick="navigateTo('home')" class="hover:text-white transition-colors">Digital Lobby</a></li>
+                    <li><a href="#doctors" onclick="navigateTo('doctors')" class="hover:text-white transition-colors">Specialist Database</a></li>
+                    <li><a href="#booking" onclick="navigateTo('booking')" class="hover:text-white transition-colors">Book Consultation</a></li>
+                    <li><a href="#dashboard" onclick="navigateTo('dashboard')" class="hover:text-white transition-colors">Personal Portal</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-mono text-xs uppercase tracking-wider text-teal font-bold mb-4">Premium Nodes</h5>
+                <ul class="space-y-2 text-sm text-slate">
+                    <li>Boston General Unit</li>
+                    <li>Geneva Heart Institute</li>
+                    <li>London Clinical Trust</li>
+                    <li>Singapore Bio-Sectors</li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-mono text-xs uppercase tracking-wider text-teal font-bold mb-4">Contact Secure Center</h5>
+                <ul class="space-y-2 text-sm text-slate">
+                    <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-teal"></i> +41 22 793 2944</li>
+                    <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-teal"></i> concierge@medicore.health</li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate">
+            <span>&copy; 2026 MediCore Health AG. Worldwide Rights Reserved.</span>
+            <div class="flex gap-6">
+                <a href="#" class="hover:text-white transition-colors">Secure HIPAA Agreement</a>
+                <a href="#" class="hover:text-white transition-colors">GDPR Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- DOCTORS DATABASE STATE ---
+        const doctorsData = [
+            {
+                id: "doc-1",
+                name: "Prof. Dr. Helen Vane",
+                specialty: "Cardiology",
+                hub: "Geneva, Switzerland",
+                institution: "Geneva Heart Institute",
+                img: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400",
+                availability: "Within 24 Hours",
+                fees: "$280 / Consult"
+            },
+            {
+                id: "doc-2",
+                name: "Dr. Alistair Sterling",
+                specialty: "Neurology",
+                hub: "London, UK",
+                institution: "London Clinical Trust",
+                img: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
+                availability: "Next Week",
+                fees: "$350 / Consult"
+            },
+            {
+                id: "doc-3",
+                name: "Prof. Chloe Zheng",
+                specialty: "Oncology",
+                hub: "Singapore",
+                institution: "Singapore Bio-Sectors",
+                img: "https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=400",
+                availability: "Within 48 Hours",
+                fees: "$400 / Consult"
+            },
+            {
+                id: "doc-4",
+                name: "Dr. Marcus Thorne",
+                specialty: "Pediatrics",
+                hub: "Boston, USA",
+                institution: "Boston General Unit",
+                img: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=400",
+                availability: "Immediate Slot",
+                fees: "$220 / Consult"
+            }
+        ];
+
+        // --- APPOINTMENTS USER STATE ---
+        let appointments = [];
+
+        // --- INITIALIZATION ---
+        document.addEventListener("DOMContentLoaded", () => {
+            // Render Lucide Icons
+            lucide.createIcons();
+            
+            // Build doctor cards in UI
+            renderDoctorCards(doctorsData);
+            
+            // Populate Dropdowns with specialist choices
+            populateBookingDropdown();
+
+            // Set dynamic date limitations on booking input
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('booking-date').min = tomorrow.toISOString().split('T')[0];
+
+            // Resolve initial hash URL route
+            handleHashRoute();
+        });
+
+        // --- SINGLE PAGE APPLICATION ROUTING SYSTEM ---
+        function navigateTo(pageId) {
+            // Update Active navigation links design
+            document.querySelectorAll('.nav-link').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === `#${pageId}`) {
+                    link.classList.add('text-teal');
+                    link.classList.remove('text-slate');
+                } else {
+                    link.classList.add('text-slate');
+                    link.classList.remove('text-teal');
+                }
+            });
+
+            // Hide all pages, show selected page
+            document.querySelectorAll('.spa-page').forEach(page => {
+                if (page.id === `page-${pageId}`) {
+                    page.classList.remove('hidden');
+                } else {
+                    page.classList.add('hidden');
+                }
+            });
+
+            // Auto-scroll window to page top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Listen for browser Back/Forward actions
+        window.addEventListener('hashchange', handleHashRoute);
+
+        function handleHashRoute() {
+            const hash = window.location.hash.replace('#', '') || 'home';
+            navigateTo(hash);
+        }
+
+        // Toggle Mobile Navigation Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // --- DOCTOR CARDS RENDER ENGINE ---
+        function renderDoctorCards(doctors) {
+            const grid = document.getElementById('doctor-grid');
+            grid.innerHTML = '';
+
+            doctors.forEach(doc => {
+                const card = document.createElement('div');
+                card.className = "glass-card hover:shadow-2xl rounded-2xl overflow-hidden border border-white flex flex-col group transition-all";
+                card.innerHTML = `
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="${doc.img}" alt="${doc.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-4 right-4 bg-navy text-teal font-mono text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-widest shadow-lg">
+                            ${doc.specialty}
+                        </div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <span class="font-mono text-xs text-teal font-bold">${doc.institution}</span>
+                            <h3 class="font-serif text-xl font-bold text-navy mt-1">${doc.name}</h3>
+                            <p class="text-xs text-slate flex items-center gap-1 mt-1">
+                                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-coral"></i> ${doc.hub}
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-blue-50 flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] text-slate block uppercase">Next Consultation Slot</span>
+                                <span class="text-xs font-mono font-bold text-teal">${doc.availability}</span>
+                            </div>
+                            <button onclick="bookSpecificDoctor('${doc.id}')" class="px-4 py-2 rounded-lg bg-navy text-white text-xs font-bold hover:bg-teal hover:text-navy transition-colors">
+                                Select Specialist
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            
+            // Re-run icons rendering for newly generated components
+            lucide.createIcons();
+            document.getElementById('results-counter').innerText = `Displaying ${doctors.length} active specialists`;
+        }
+
+        // --- DOCTORS FILTERING ENGINE ---
+        function applyDoctorFilters() {
+            const spec = document.getElementById('filter-specialty').value;
+            const hub = document.getElementById('filter-hub').value;
+
+            const filtered = doctorsData.filter(doc => {
+                const matchSpec = (spec === 'All' || doc.specialty === spec);
+                const matchHub = (hub === 'All' || doc.hub.includes(hub));
+                return matchSpec && matchHub;
+            });
+
+            renderDoctorCards(filtered);
+        }
+
+        // --- BOOKING PROCESS FLOW ENGINE ---
+        function populateBookingDropdown() {
+            const dropdown = document.getElementById('booking-doctor');
+            dropdown.innerHTML = '<option value="">Select Practitioner...</option>';
+            doctorsData.forEach(doc => {
+                dropdown.innerHTML += `<option value="${doc.id}">${doc.name} (${doc.specialty} — ${doc.hub})</option>`;
+            });
+        }
+
+        function bookSpecificDoctor(docId) {
+            // Jump smoothly directly to booking process page
+            window.location.hash = 'booking';
+            // Pre-select designated practitioner in dropdown
+            document.getElementById('booking-doctor').value = docId;
+        }
+
+        function handleQuickBook(event) {
+            event.preventDefault();
+            const spec = document.getElementById('hero-specialty').value;
+            const hubLocation = document.getElementById('hero-location').value;
+
+            // Route user directly to database page with query filters preset
+            window.location.hash = 'doctors';
+            
+            if(spec) document.getElementById('filter-specialty').value = spec;
+            // Map simple select values to options inside full selection box
+            if(hubLocation.includes('Geneva')) document.getElementById('filter-hub').value = 'Geneva';
+            if(hubLocation.includes('London')) document.getElementById('filter-hub').value = 'London';
+            if(hubLocation.includes('Boston')) document.getElementById('filter-hub').value = 'Boston';
+            if(hubLocation.includes('Singapore')) document.getElementById('filter-hub').value = 'Singapore';
+
+            applyDoctorFilters();
+        }
+
+        function handleFinalBooking(event) {
+            event.preventDefault();
+
+            const docId = document.getElementById('booking-doctor').value;
+            const docObj = doctorsData.find(d => d.id === docId);
+            const name = document.getElementById('booking-name').value;
+            const email = document.getElementById('booking-email').value;
+            const date = document.getElementById('booking-date').value;
+            const time = document.getElementById('booking-time').value;
+            const mode = document.getElementById('booking-mode').value;
+            const symptoms = document.getElementById('booking-symptoms').value;
+
+            // Create appointment state object
+            const newAppointment = {
+                id: `MC-APT-${Math.floor(100000 + Math.random() * 900000)}`,
+                doctorName: docObj ? docObj.name : 'Chief Triage Specialist',
+                specialty: docObj ? docObj.specialty : 'General',
+                hub: docObj ? docObj.hub : 'Geneva Head Node',
+                patientName: name,
+                patientEmail: email,
+                date: date,
+                time: time,
+                mode: mode,
+                status: 'Authorized & Scheduled'
+            };
+
+            appointments.push(newAppointment);
+
+            // Update UI Counters
+            updateDashboardCounters();
+
+            // Render Dashboard details with new lists
+            renderDashboardAppointments();
+
+            // Show interactive alerts to confirm user success
+            alert(`Care Session Confirmed! \nYour Private Hub Session ID is: ${newAppointment.id}\nCheck your Patient Portal Dashboard.`);
+
+            // Reset booking form page
+            document.getElementById('main-booking-form').reset();
+
+            // Route directly to Patient Dashboard
+            window.location.hash = 'dashboard';
+        }
+
+        // --- DASHBOARD AND STATE COUNTERS SYSTEM ---
+        function updateDashboardCounters() {
+            const count = appointments.length;
+            document.getElementById('nav-count').innerText = count;
+            document.getElementById('mobile-nav-count').innerText = count;
+            document.getElementById('dash-record-count').innerText = `${count} Session${count === 1 ? '' : 's'}`;
+        }
+
+        function renderDashboardAppointments() {
+            const emptyState = document.getElementById('dashboard-empty');
+            const listContainer = document.getElementById('appointments-list');
+            
+            if (appointments.length === 0) {
+                emptyState.classList.remove('hidden');
+                listContainer.classList.add('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            listContainer.classList.remove('hidden');
+
+            // Dynamically set clinical profile name of booking patient
+            document.getElementById('dash-profile-name').innerText = appointments[0].patientName;
+
+            listContainer.innerHTML = '';
+            appointments.forEach((apt, idx) => {
+                const aptCard = document.createElement('div');
+                aptCard.className = "p-6 rounded-2xl bg-white border border-blue-50 shadow-sm relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:border-teal/30 transition-all";
+                aptCard.innerHTML = `
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="font-mono text-xs text-coral font-bold bg-coral/10 px-2 py-0.5 rounded">${apt.id}</span>
+                            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded-full">${apt.status}</span>
+                        </div>
+                        <h4 class="font-serif text-xl font-bold text-navy">${apt.doctorName}</h4>
+                        <p class="text-xs text-slate flex items-center gap-1.5">
+                            <i data-lucide="tag" class="w-3.5 h-3.5 text-teal"></i> ${apt.specialty}
+                            <span class="text-slate/40">|</span>
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-teal"></i> ${apt.hub}
+                        </p>
+                    </div>
+                    <div class="md:text-right border-t md:border-t-0 pt-4 md:pt-0 w-full md:w-auto">
+                        <span class="font-mono text-xs block text-slate uppercase">Date & Hour Setup</span>
+                        <span class="font-mono text-sm block font-bold text-navy mt-0.5">${apt.date}</span>
+                        <span class="font-mono text-xs text-teal font-medium">${apt.time}</span>
+                        <span class="block text-xs text-slate/75 mt-1">Via: ${apt.mode}</span>
+                    </div>
+                    <button onclick="cancelAppointment(${idx})" class="absolute top-4 right-4 md:static p-2 hover:bg-rose-50 text-slate hover:text-rose-600 rounded-lg transition-colors" title="Cancel Appointment">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                `;
+                listContainer.appendChild(aptCard);
+            });
+
+            lucide.createIcons();
+        }
+
+        function cancelAppointment(index) {
+            if (confirm("Are you sure you want to cancel this secure care appointment session?")) {
+                appointments.splice(index, 1);
+                updateDashboardCounters();
+                renderDashboardAppointments();
+            }
+        }
+    </script>
+</body>
+</html>
