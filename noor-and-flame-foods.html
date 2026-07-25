@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noor & Flame | Order Online</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: {
+            dark: '#0A0B0D',
+            card: '#121418',
+            gold: '#D4AF37',
+            'gold-hover': '#F3C623',
+            muted: '#A1A1AA',
+            crimson: '#8B0000',
+            green: '#1F7A4D'
+          }
+        },
+        fontFamily: {
+          serif: ['Playfair Display', 'serif'],
+          sans: ['Inter', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body{background-color:#0A0B0D;color:#F4F4F5;font-family:'Inter',sans-serif;overflow-x:hidden;}
+  .hero-bg{background:linear-gradient(to bottom, rgba(10,11,13,0.6), rgba(10,11,13,1)), url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1920&auto=format&fit=crop');background-size:cover;background-position:center;}
+  .glass-panel{background:rgba(18,20,24,0.7);backdrop-filter:blur(12px);border:1px solid rgba(212,175,55,0.15);}
+  ::-webkit-scrollbar{width:8px;}
+  ::-webkit-scrollbar-track{background:#0A0B0D;}
+  ::-webkit-scrollbar-thumb{background:#2a2c31;border-radius:4px;}
+  .tab-active{color:#D4AF37 !important;border-color:#D4AF37 !important;}
+  .qty-btn{transition:all .15s ease;}
+  .qty-btn:hover{background:#D4AF37;color:#000;}
+  .overlay{transition:opacity .25s ease;}
+  .drawer{transition:transform .35s cubic-bezier(.16,1,.3,1);}
+  .status-dot{width:10px;height:10px;border-radius:9999px;}
+  input:focus, select:focus, textarea:focus{outline:none;}
+  .scale-in{animation:scaleIn .25s ease;}
+  @keyframes scaleIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+</style>
+</head>
+<body>
+
+<!-- ================= NAVIGATION ================= -->
+<nav class="fixed top-0 left-0 w-full z-40 glass-panel border-b border-white/5 px-6 py-4">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <a href="#" class="font-serif text-2xl font-bold tracking-wider text-brand-gold">NOOR <span class="text-white">&</span> FLAME</a>
+
+    <div class="hidden md:flex space-x-8 text-sm tracking-wide text-zinc-300">
+      <a href="#menu" class="hover:text-brand-gold transition-colors">MENU</a>
+      <a href="#deals" class="hover:text-brand-gold transition-colors">DEALS</a>
+      <button onclick="openTracking()" class="hover:text-brand-gold transition-colors">TRACK ORDER</button>
+      <a href="#contact" class="hover:text-brand-gold transition-colors">LOCATION</a>
+      <button onclick="openAdmin()" class="hover:text-brand-gold transition-colors">ADMIN</button>
+    </div>
+
+    <button onclick="openCart()" class="relative px-5 py-2.5 bg-brand-gold text-black font-semibold text-xs tracking-widest uppercase hover:bg-brand-gold-hover transition-all duration-300 rounded-sm flex items-center gap-2">
+      <i data-lucide="shopping-bag" class="w-4 h-4"></i> Cart
+      <span id="cartBadge" class="hidden absolute -top-2 -right-2 bg-brand-crimson text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section class="relative min-h-screen hero-bg flex items-center justify-center pt-24 px-6">
+  <div class="max-w-4xl mx-auto text-center z-10 hero-content">
+    <span class="inline-block text-brand-gold text-xs font-semibold tracking-[0.3em] uppercase mb-4 border-b border-brand-gold/40 pb-1">Clifton, Karachi</span>
+    <h1 class="font-serif text-5xl md:text-7xl font-bold text-white leading-tight mb-6">Karachi Heritage,<br/><span class="italic font-normal text-brand-gold">Elevated.</span></h1>
+    <p class="text-zinc-400 text-lg md:text-xl font-light max-w-2xl mx-auto mb-10 leading-relaxed">Order our signature charcoal-fired dishes for delivery, pickup, or reserve your table for an evening by the coast.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#menu" class="px-8 py-4 bg-brand-gold text-black font-semibold text-sm tracking-widest uppercase hover:bg-brand-gold-hover transition-all">Order Now</a>
+      <a href="#deals" class="px-8 py-4 border border-zinc-700 text-white font-semibold text-sm tracking-widest uppercase hover:border-brand-gold hover:text-brand-gold transition-all">View Deals</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about" class="py-28 px-6 bg-brand-dark relative">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+    <div class="about-image relative">
+      <div class="aspect-[4/5] rounded-sm overflow-hidden border border-brand-gold/20">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1000&auto=format&fit=crop" alt="Karachi Fine Dining Experience" class="w-full h-full object-cover">
+      </div>
+      <div class="absolute -bottom-8 -right-8 glass-panel p-6 hidden lg:block max-w-xs border border-brand-gold/30">
+        <p class="font-serif italic text-brand-gold text-lg">"Where the spice routes of Sindh meet modern culinary precision."</p>
+      </div>
+    </div>
+    <div class="about-text space-y-6">
+      <span class="text-brand-gold text-xs font-semibold tracking-widest uppercase">The Concept</span>
+      <h2 class="font-serif text-4xl md:text-5xl text-white font-bold">Fire, Smoke & Craftsmanship</h2>
+      <p class="text-zinc-400 font-light leading-relaxed">Rooted in Karachi's vibrant food culture, Noor & Flame reinterprets iconic coastal and Mughlai flavors. We source hand-selected spices from Empress Market and prime cuts locally, prepared over open pit charcoal flames.</p>
+      <div class="grid grid-cols-2 gap-6 pt-4 border-t border-zinc-800">
+        <div><h4 class="font-serif text-2xl text-brand-gold mb-1">100%</h4><p class="text-xs text-zinc-500 uppercase tracking-wider">Organic Local Sourcing</p></div>
+        <div><h4 class="font-serif text-2xl text-brand-gold mb-1">Wood-Fired</h4><p class="text-xs text-zinc-500 uppercase tracking-wider">Coal & Pit Technique</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MENU ================= -->
+<section id="menu" class="py-28 px-6 bg-brand-card relative">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-12 section-header">
+      <span class="text-brand-gold text-xs font-semibold tracking-widest uppercase">Curated Offerings</span>
+      <h2 class="font-serif text-4xl md:text-5xl text-white font-bold mt-2">Signature Menu</h2>
+    </div>
+
+    <div id="categoryTabs" class="flex flex-wrap justify-center gap-3 mb-12"></div>
+    <div id="menuList" class="grid md:grid-cols-2 gap-8"></div>
+  </div>
+</section>
+
+<!-- ================= DEALS ================= -->
+<section id="deals" class="py-28 px-6 bg-brand-dark relative">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12">
+      <span class="text-brand-gold text-xs font-semibold tracking-widest uppercase">Limited Time</span>
+      <h2 class="font-serif text-4xl md:text-5xl text-white font-bold mt-2">Deals & Combos</h2>
+    </div>
+    <div id="dealsList" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+  </div>
+</section>
+
+<!-- ================= RESERVATION ================= -->
+<section id="reservation" class="py-28 px-6 bg-brand-card relative">
+  <div class="max-w-3xl mx-auto glass-panel p-10 md:p-14 rounded-sm border border-brand-gold/20">
+    <div class="text-center mb-10">
+      <span class="text-brand-gold text-xs font-semibold tracking-widest uppercase">Reserve A Table</span>
+      <h2 class="font-serif text-3xl md:text-4xl text-white font-bold mt-2">Join Us For Dinner</h2>
+    </div>
+    <form class="space-y-6" onsubmit="event.preventDefault(); alert('Reservation Request Received! We will confirm via phone shortly.'); this.reset();">
+      <div class="grid md:grid-cols-2 gap-6">
+        <div><label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2">Full Name</label>
+          <input type="text" required placeholder="Faraz Ali" class="w-full bg-brand-dark/80 border border-zinc-800 text-white px-4 py-3 text-sm focus:border-brand-gold transition-colors"></div>
+        <div><label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2">Phone Number</label>
+          <input type="tel" required placeholder="+92 300 1234567" class="w-full bg-brand-dark/80 border border-zinc-800 text-white px-4 py-3 text-sm focus:border-brand-gold transition-colors"></div>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div><label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2">Guests</label>
+          <select class="w-full bg-brand-dark/80 border border-zinc-800 text-white px-4 py-3 text-sm focus:border-brand-gold transition-colors">
+            <option>2 Persons</option><option>4 Persons</option><option>6+ Guests</option></select></div>
+        <div><label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2">Date</label>
+          <input type="date" required class="w-full bg-brand-dark/80 border border-zinc-800 text-white px-4 py-3 text-sm focus:border-brand-gold transition-colors"></div>
+        <div><label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2">Time Slot</label>
+          <select class="w-full bg-brand-dark/80 border border-zinc-800 text-white px-4 py-3 text-sm focus:border-brand-gold transition-colors">
+            <option>07:30 PM</option><option>09:00 PM</option><option>10:30 PM</option></select></div>
+      </div>
+      <button type="submit" class="w-full py-4 bg-brand-gold text-black font-semibold text-xs tracking-widest uppercase hover:bg-brand-gold-hover transition-all">Confirm Reservation</button>
+    </form>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer id="contact" class="bg-black py-16 px-6 border-t border-zinc-900">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-10 text-center md:text-left">
+    <div><h3 class="font-serif text-xl font-bold text-brand-gold mb-4">NOOR & FLAME</h3>
+      <p class="text-sm text-zinc-500 max-w-sm">Block 4, Scheme 5, Clifton,<br/>Karachi, Sindh, Pakistan</p></div>
+    <div><h4 class="text-xs uppercase tracking-widest text-zinc-400 mb-4">Hours of Operation</h4>
+      <p class="text-sm text-zinc-500">Tuesday – Sunday: 7:00 PM – 1:00 AM</p>
+      <p class="text-sm text-zinc-500">Mondays: Closed</p></div>
+    <div><h4 class="text-xs uppercase tracking-widest text-zinc-400 mb-4">Contact & Inquiries</h4>
+      <p class="text-sm text-zinc-500">+92 21 35870000</p>
+      <p class="text-sm text-zinc-500">reservations@noorandflame.pk</p></div>
+  </div>
+  <div class="max-w-7xl mx-auto border-t border-zinc-900 mt-12 pt-6 text-center text-xs text-zinc-600">© 2026 Noor & Flame Karachi. All rights reserved.</div>
+</footer>
+
+<!-- ================= CART DRAWER ================= -->
+<div id="cartOverlay" class="overlay hidden fixed inset-0 bg-black/70 z-50 opacity-0" onclick="closeCart()"></div>
+<div id="cartDrawer" class="drawer fixed top-0 right-0 h-full w-full sm:w-[440px] bg-brand-card border-l border-brand-gold/20 z-50 translate-x-full flex flex-col">
+  <div class="flex items-center justify-between px-6 py-5 border-b border-zinc-800">
+    <h3 class="font-serif text-xl text-white font-bold" id="drawerTitle">Your Order</h3>
+    <button onclick="closeCart()" class="text-zinc-400 hover:text-brand-gold"><i data-lucide="x" class="w-5 h-5"></i></button>
+  </div>
+
+  <div id="cartView" class="flex-1 overflow-y-auto px-6 py-4">
+    <div id="cartItems" class="space-y-4"></div>
+    <p id="cartEmptyMsg" class="text-zinc-500 text-sm text-center py-16 hidden">Your cart is empty. Add something delicious from the menu.</p>
+  </div>
+  <div id="cartFooter" class="px-6 py-5 border-t border-zinc-800 space-y-3">
+    <div class="flex justify-between text-sm text-zinc-400"><span>Subtotal</span><span id="cartSubtotal">PKR 0</span></div>
+    <button onclick="goToCheckout()" id="checkoutBtn" class="w-full py-4 bg-brand-gold text-black font-semibold text-xs tracking-widest uppercase hover:bg-brand-gold-hover transition-all disabled:opacity-40" disabled>Proceed to Checkout</button>
+  </div>
+
+  <!-- Checkout form (hidden by default) -->
+  <div id="checkoutView" class="hidden flex-1 overflow-y-auto px-6 py-4">
+    <button onclick="backToCart()" class="text-xs text-brand-gold mb-4 flex items-center gap-1"><i data-lucide="arrow-left" class="w-3 h-3"></i> Back to cart</button>
+    <form id="checkoutForm" onsubmit="submitOrder(event)" class="space-y-4">
+      <div><label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2">Full Name</label>
+        <input required id="custName" type="text" placeholder="Faraz Ali" class="w-full bg-brand-dark/80 border border-zinc-800 text-white px-4 py-3 text-sm focus:border-brand-gold"></div>
+      <div><label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2">Phone Number</label>
+        <input required id="custPhone" type="tel" placeholder="+92 300 1234567" class="w-full bg-brand-dark/80 border border-zinc-800 text-white px-4 py-3 text-sm focus:border-brand-gold"></div>
+      <div><label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2">Order Type</label>
+        <select id="orderType" onchange="toggleAddressField()" class="w-full bg-brand-dark/80 border border-zinc-800 text-white px-4 py-3 text-sm focus:border-brand-gold">
+          <option value="Delivery">Delivery</option><option value="Pickup">Pickup</option><option value="Dine-in">Dine-in</option></select></div>
+      <div id="addressField"><label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2">Delivery Address</label>
+        <textarea id="custAddress" rows="2" placeholder="House / Street, Area, Karachi" class="w-full bg-brand-dark/80 border border-zinc-800 text-white px-4 py-3 text-sm focus:border-brand-gold"></textarea></div>
+      <div><label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2">Payment Method</label>
+        <select id="paymentMethod" class="w-full bg-brand-dark/80 border border-zinc-800 text-white px-4 py-3 text-sm focus:border-brand-gold">
+          <option>Cash on Delivery</option><option>Card on Arrival</option></select></div>
+      <div><label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2">Notes (optional)</label>
+        <textarea id="custNotes" rows="2" placeholder="Less spicy, no onions, etc." class="w-full bg-brand-dark/80 border border-zinc-800 text-white px-4 py-3 text-sm focus:border-brand-gold"></textarea></div>
+
+      <div class="border-t border-zinc-800 pt-4 space-y-1 text-sm">
+        <div class="flex justify-between text-zinc-400"><span>Subtotal</span><span id="chkSubtotal">PKR 0</span></div>
+        <div class="flex justify-between text-zinc-400"><span>Delivery Fee</span><span id="chkDelivery">PKR 0</span></div>
+        <div class="flex justify-between text-white font-semibold text-base pt-1"><span>Total</span><span id="chkTotal">PKR 0</span></div>
+      </div>
+      <button type="submit" class="w-full py-4 bg-brand-gold text-black font-semibold text-xs tracking-widest uppercase hover:bg-brand-gold-hover transition-all">Place Order</button>
+    </form>
+  </div>
+
+  <!-- Confirmation -->
+  <div id="confirmView" class="hidden flex-1 overflow-y-auto px-6 py-10 text-center">
+    <i data-lucide="check-circle-2" class="w-14 h-14 text-brand-gold mx-auto mb-4"></i>
+    <h4 class="font-serif text-2xl text-white font-bold mb-2">Order Placed!</h4>
+    <p class="text-zinc-400 text-sm mb-4">Your order ID is</p>
+    <p class="text-brand-gold font-serif text-xl font-bold mb-6" id="confirmOrderId">—</p>
+    <p class="text-zinc-500 text-xs mb-8">Save this ID to track your order status anytime.</p>
+    <button onclick="closeCart()" class="w-full py-4 border border-zinc-700 text-white font-semibold text-xs tracking-widest uppercase hover:border-brand-gold hover:text-brand-gold transition-all">Done</button>
+  </div>
+</div>
+
+<!-- ================= TRACK ORDER OVERLAY ================= -->
+<div id="trackingOverlay" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center px-6">
+  <div class="glass-panel border border-brand-gold/20 max-w-lg w-full rounded-sm p-8 scale-in max-h-[85vh] overflow-y-auto">
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="font-serif text-2xl text-white font-bold">Track Your Order</h3>
+      <button onclick="closeTracking()" class="text-zinc-400 hover:text-brand-gold"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    <div class="flex gap-3 mb-6">
+      <input id="trackPhone" type="tel" placeholder="Enter your phone number" class="flex-1 bg-brand-dark/80 border border-zinc-800 text-white px-4 py-3 text-sm focus:border-brand-gold">
+      <button onclick="lookupOrders()" class="px-5 bg-brand-gold text-black font-semibold text-xs uppercase tracking-widest hover:bg-brand-gold-hover">Search</button>
+    </div>
+    <div id="trackResults" class="space-y-6"></div>
+  </div>
+</div>
+
+<!-- ================= ADMIN OVERLAY ================= -->
+<div id="adminOverlay" class="hidden fixed inset-0 bg-black/90 z-50 overflow-y-auto px-6 py-10">
+  <div class="max-w-5xl mx-auto">
+    <div class="flex justify-between items-center mb-8">
+      <h3 class="font-serif text-3xl text-white font-bold">Order Management</h3>
+      <button onclick="closeAdmin()" class="text-zinc-400 hover:text-brand-gold"><i data-lucide="x" class="w-6 h-6"></i></button>
+    </div>
+
+    <div id="adminLoginView" class="max-w-sm mx-auto glass-panel border border-brand-gold/20 rounded-sm p-8 mt-16">
+      <p class="text-xs uppercase tracking-widest text-zinc-400 mb-3">Staff Access</p>
+      <input id="adminPin" type="password" placeholder="Enter PIN" class="w-full bg-brand-dark/80 border border-zinc-800 text-white px-4 py-3 text-sm mb-4 focus:border-brand-gold">
+      <button onclick="checkAdminPin()" class="w-full py-3 bg-brand-gold text-black font-semibold text-xs tracking-widest uppercase hover:bg-brand-gold-hover">Login</button>
+      <p class="text-zinc-600 text-xs mt-4">Demo PIN: 2026</p>
+    </div>
+
+    <div id="adminDashboard" class="hidden">
+      <div class="grid sm:grid-cols-3 gap-4 mb-8">
+        <div class="glass-panel border border-zinc-800 p-5 rounded-sm"><p class="text-xs text-zinc-500 uppercase tracking-wider mb-1">Orders Today</p><p id="statOrdersToday" class="font-serif text-3xl text-brand-gold font-bold">0</p></div>
+        <div class="glass-panel border border-zinc-800 p-5 rounded-sm"><p class="text-xs text-zinc-500 uppercase tracking-wider mb-1">Revenue Today</p><p id="statRevenueToday" class="font-serif text-3xl text-brand-gold font-bold">PKR 0</p></div>
+        <div class="glass-panel border border-zinc-800 p-5 rounded-sm"><p class="text-xs text-zinc-500 uppercase tracking-wider mb-1">Active Orders</p><p id="statActive" class="font-serif text-3xl text-brand-gold font-bold">0</p></div>
+      </div>
+
+      <div class="flex justify-between items-center mb-4">
+        <div id="adminStatusFilter" class="flex flex-wrap gap-2"></div>
+        <button onclick="loadAdminOrders()" class="text-xs text-brand-gold flex items-center gap-1"><i data-lucide="refresh-cw" class="w-3 h-3"></i> Refresh</button>
+      </div>
+
+      <div id="adminOrdersList" class="space-y-4"></div>
+      <p id="adminEmptyMsg" class="hidden text-zinc-500 text-sm text-center py-16">No orders yet.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+lucide.createIcons();
+gsap.registerPlugin(ScrollTrigger);
+
+/* ============ DATA ============ */
+const MENU = [
+  {id:'m1', cat:'Starters', name:'Spiced Chicken Tikka Skewers', desc:'Charcoal-grilled chicken thigh, smoked paprika, mint yogurt drizzle.', price:1200},
+  {id:'m2', cat:'Starters', name:'Crispy Prawn Koftas', desc:'Minced prawn & herb koftas, tamarind chili glaze.', price:1450},
+  {id:'m3', cat:'Starters', name:'Truffle Papdi Chaat', desc:'Crisp papdi, tangy chutneys, black truffle shavings.', price:950},
+  {id:'m4', cat:'Mains', name:'Truffle Nihari Osso Buco', desc:'Slow-braised veal shank, black truffle infusion, crispy ginger, gold leaf heirloom naan.', price:3800},
+  {id:'m5', cat:'Mains', name:'Arabian Gulf Prawn Karahi', desc:'Jumbo tiger prawns, heirloom tomato reduction, roasted green chillies, fenugreek butter.', price:4200},
+  {id:'m6', cat:'Mains', name:'Butter Chicken Reduction', desc:'Charcoal chicken in velvet tomato-butter gravy, kasuri methi.', price:2600},
+  {id:'m7', cat:'Mains', name:'Lamb Shank Biryani Deconstructed', desc:'Saffron rice layers, slow-cooked lamb shank, fried onion crisp.', price:3200},
+  {id:'m8', cat:'Grills', name:'Smoked Charcoal Sajji', desc:'Whole organic chicken marinated in wild rock salt & pomegranate molasses, pit-roasted.', price:2950},
+  {id:'m9', cat:'Grills', name:'Reshmi Malai Boti', desc:'Cream-marinated chicken skewers, char-grilled to silk.', price:1800},
+  {id:'m10', cat:'Grills', name:'Bihari Beef Tikka', desc:'Slow-marinated beef, mustard oil & roasted spice crust.', price:2100},
+  {id:'m11', cat:'Desserts', name:'Saffron & Rose Kheer Tart', desc:'Cardamom pastry shell, condensed pistachio rabri, candied rose petals, silver leaf.', price:1450},
+  {id:'m12', cat:'Desserts', name:'Gulab Jamun Souffle', desc:'Warm souffle, rose syrup core, vanilla bean cream.', price:1100},
+  {id:'m13', cat:'Desserts', name:'Pistachio Kulfi Falooda', desc:'Layered kulfi, vermicelli, basil seeds, rose syrup.', price:950},
+  {id:'m14', cat:'Beverages', name:'Rose Sherbet Fizz', desc:'Rose water, soda, dried rose petals.', price:650},
+  {id:'m15', cat:'Beverages', name:'Kashmiri Chai Latte', desc:'Pink tea, pistachio dust, condensed milk foam.', price:700},
+  {id:'m16', cat:'Beverages', name:'Fresh Lime Mint Cooler', desc:'Lime, mint, rock salt, soda.', price:550},
+];
+
+const DEALS = [
+  {id:'d1', name:'Date Night Duo', desc:'2 Mains of choice + 2 Desserts + 2 Beverages.', originalPrice:9800, price:7500},
+  {id:'d2', name:'Family Feast (Serves 4-5)', desc:'Whole Sajji + Prawn Karahi + Biryani + Naan basket + Dessert platter.', originalPrice:15500, price:11900},
+  {id:'d3', name:'Grill Sampler Platter', desc:'Tikka, Boti & Bihari Tikka trio with mint chutney.', originalPrice:5900, price:4500},
+  {id:'d4', name:'Lunch Express Combo', desc:'1 Starter + 1 Main + 1 Beverage. Available till 5 PM.', originalPrice:4700, price:3200},
+];
+
+const CATEGORIES = [...new Set(MENU.map(m=>m.cat))];
+const DELIVERY_FEE = 250;
+const STATUSES = ['Received','Preparing','On the Way','Completed'];
+const ADMIN_PIN = '2026';
+
+let cart = []; // {id, name, price, qty}
+let currentCategory = CATEGORIES[0];
+
+/* ============ RENDER MENU / DEALS ============ */
+function renderCategoryTabs(){
+  const el = document.getElementById('categoryTabs');
+  el.innerHTML = CATEGORIES.map(c => `
+    <button onclick="setCategory('${c}')" data-cat="${c}"
+      class="cat-tab px-5 py-2 text-xs tracking-widest uppercase border-b-2 border-transparent text-zinc-400 hover:text-brand-gold transition-colors ${c===currentCategory?'tab-active':''}">
+      ${c}
+    </button>`).join('');
+}
+function setCategory(c){
+  currentCategory = c;
+  document.querySelectorAll('.cat-tab').forEach(b=>b.classList.remove('tab-active'));
+  document.querySelector(`.cat-tab[data-cat="${c}"]`).classList.add('tab-active');
+  renderMenuList();
+}
+function renderMenuList(){
+  const items = MENU.filter(m=>m.cat===currentCategory);
+  document.getElementById('menuList').innerHTML = items.map(m => `
+    <div class="menu-item flex justify-between items-start border-b border-zinc-800 pb-6">
+      <div class="pr-4">
+        <h3 class="font-serif text-xl text-white font-medium mb-1">${m.name}</h3>
+        <p class="text-sm text-zinc-400 font-light mb-3">${m.desc}</p>
+        <button onclick="addToCart('${m.id}','menu')" class="text-xs uppercase tracking-widest text-brand-gold border border-brand-gold/40 px-3 py-1.5 hover:bg-brand-gold hover:text-black transition-all rounded-sm">+ Add to Order</button>
+      </div>
+      <span class="font-serif text-lg text-brand-gold font-semibold whitespace-nowrap">PKR ${m.price.toLocaleString()}</span>
+    </div>`).join('');
+}
+function renderDeals(){
+  document.getElementById('dealsList').innerHTML = DEALS.map(d => `
+    <div class="deal-card glass-panel border border-brand-gold/20 rounded-sm p-6 flex flex-col justify-between">
+      <div>
+        <h3 class="font-serif text-lg text-white font-bold mb-2">${d.name}</h3>
+        <p class="text-xs text-zinc-400 font-light mb-4 leading-relaxed">${d.desc}</p>
+      </div>
+      <div>
+        <div class="flex items-baseline gap-2 mb-4">
+          <span class="text-zinc-500 line-through text-xs">PKR ${d.originalPrice.toLocaleString()}</span>
+          <span class="font-serif text-xl text-brand-gold font-bold">PKR ${d.price.toLocaleString()}</span>
+        </div>
+        <button onclick="addToCart('${d.id}','deal')" class="w-full text-xs uppercase tracking-widest bg-brand-gold text-black py-2.5 hover:bg-brand-gold-hover transition-all rounded-sm font-semibold">Add Deal</button>
+      </div>
+    </div>`).join('');
+}
+
+/* ============ CART ============ */
+function addToCart(id, type){
+  const src = type==='menu' ? MENU.find(x=>x.id===id) : DEALS.find(x=>x.id===id);
+  const existing = cart.find(c=>c.id===id);
+  if(existing){ existing.qty++; }
+  else { cart.push({id, name:src.name, price:src.price, qty:1, type}); }
+  renderCart();
+  flashCartBadge();
+}
+function changeQty(id, delta){
+  const item = cart.find(c=>c.id===id);
+  if(!item) return;
+  item.qty += delta;
+  if(item.qty<=0) cart = cart.filter(c=>c.id!==id);
+  renderCart();
+}
+function cartSubtotal(){ return cart.reduce((s,c)=>s+c.price*c.qty,0); }
+function renderCart(){
+  const wrap = document.getElementById('cartItems');
+  const empty = document.getElementById('cartEmptyMsg');
+  const btn = document.getElementById('checkoutBtn');
+  if(cart.length===0){
+    wrap.innerHTML=''; empty.classList.remove('hidden'); btn.disabled = true;
+  } else {
+    empty.classList.add('hidden'); btn.disabled = false;
+    wrap.innerHTML = cart.map(c => `
+      <div class="flex justify-between items-center border-b border-zinc-800 pb-4">
+        <div class="pr-3">
+          <p class="text-sm text-white font-medium">${c.name}</p>
+          <p class="text-xs text-zinc-500">PKR ${c.price.toLocaleString()} x ${c.qty}</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="changeQty('${c.id}',-1)" class="qty-btn w-7 h-7 border border-zinc-700 text-white rounded-sm text-sm">−</button>
+          <span class="text-sm text-white w-4 text-center">${c.qty}</span>
+          <button onclick="changeQty('${c.id}',1)" class="qty-btn w-7 h-7 border border-zinc-700 text-white rounded-sm text-sm">+</button>
+        </div>
+      </div>`).join('');
+  }
+  document.getElementById('cartSubtotal').textContent = 'PKR ' + cartSubtotal().toLocaleString();
+  const badge = document.getElementById('cartBadge');
+  const totalQty = cart.reduce((s,c)=>s+c.qty,0);
+  if(totalQty>0){ badge.classList.remove('hidden'); badge.textContent = totalQty; } else { badge.classList.add('hidden'); }
+}
+function flashCartBadge(){
+  const badge = document.getElementById('cartBadge');
+  gsap.fromTo(badge, {scale:1.4}, {scale:1, duration:.3, ease:'back.out(3)'});
+}
+
+/* ============ DRAWER NAV ============ */
+function openCart(){
+  document.getElementById('cartOverlay').classList.remove('hidden');
+  requestAnimationFrame(()=>document.getElementById('cartOverlay').style.opacity=1);
+  document.getElementById('cartDrawer').classList.remove('translate-x-full');
+  showCartStep('cart');
+}
+function closeCart(){
+  document.getElementById('cartOverlay').style.opacity=0;
+  document.getElementById('cartDrawer').classList.add('translate-x-full');
+  setTimeout(()=>document.getElementById('cartOverlay').classList.add('hidden'),250);
+}
+function showCartStep(step){
+  document.getElementById('cartView').classList.toggle('hidden', step!=='cart');
+  document.getElementById('cartFooter').classList.toggle('hidden', step!=='cart');
+  document.getElementById('checkoutView').classList.toggle('hidden', step!=='checkout');
+  document.getElementById('confirmView').classList.toggle('hidden', step!=='confirm');
+  document.getElementById('drawerTitle').textContent = step==='checkout' ? 'Checkout' : step==='confirm' ? 'Confirmation' : 'Your Order';
+}
+function goToCheckout(){
+  if(cart.length===0) return;
+  showCartStep('checkout');
+  updateCheckoutTotals();
+}
+function backToCart(){ showCartStep('cart'); }
+function toggleAddressField(){
+  const type = document.getElementById('orderType').value;
+  document.getElementById('addressField').style.display = type==='Delivery' ? 'block' : 'none';
+  updateCheckoutTotals();
+}
+function updateCheckoutTotals(){
+  const sub = cartSubtotal();
+  const type = document.getElementById('orderType').value;
+  const fee = type==='Delivery' ? DELIVERY_FEE : 0;
+  document.getElementById('chkSubtotal').textContent = 'PKR ' + sub.toLocaleString();
+  document.getElementById('chkDelivery').textContent = 'PKR ' + fee.toLocaleString();
+  document.getElementById('chkTotal').textContent = 'PKR ' + (sub+fee).toLocaleString();
+}
+
+/* ============ ORDER STORAGE ============ */
+function genOrderId(){
+  return 'NF' + Date.now().toString(36).toUpperCase().slice(-6) + Math.random().toString(36).slice(2,5).toUpperCase();
+}
+async function submitOrder(e){
+  e.preventDefault();
+  const type = document.getElementById('orderType').value;
+  const sub = cartSubtotal();
+  const fee = type==='Delivery' ? DELIVERY_FEE : 0;
+  const order = {
+    id: genOrderId(),
+    customer: {
+      name: document.getElementById('custName').value,
+      phone: document.getElementById('custPhone').value,
+      address: document.getElementById('custAddress').value || ''
+    },
+    orderType: type,
+    payment: document.getElementById('paymentMethod').value,
+    notes: document.getElementById('custNotes').value || '',
+    items: cart.map(c=>({name:c.name, price:c.price, qty:c.qty})),
+    subtotal: sub,
+    deliveryFee: fee,
+    total: sub+fee,
+    status: 'Received',
+    createdAt: new Date().toISOString()
+  };
+  try{
+    const res = await window.storage.set('orders:'+order.id, JSON.stringify(order), true);
+    if(!res){ alert('Could not save your order right now. Please try again.'); return; }
+  }catch(err){
+    alert('Could not save your order right now. Please try again.');
+    return;
+  }
+  document.getElementById('confirmOrderId').textContent = order.id;
+  cart = [];
+  renderCart();
+  document.getElementById('checkoutForm').reset();
+  showCartStep('confirm');
+}
+
+async function getAllOrders(){
+  try{
+    const list = await window.storage.list('orders:', true);
+    if(!list || !list.keys) return [];
+    const orders = [];
+    for(const k of list.keys){
+      try{
+        const r = await window.storage.get(k, true);
+        if(r && r.value) orders.push(JSON.parse(r.value));
+      }catch(e){ /* skip missing */ }
+    }
+    orders.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt));
+    return orders;
+  }catch(e){ return []; }
+}
+
+/* ============ TRACK ORDER ============ */
+function openTracking(){
+  document.getElementById('trackingOverlay').classList.remove('hidden');
+  document.getElementById('trackResults').innerHTML = '';
+  document.getElementById('trackPhone').value = '';
+}
+function closeTracking(){ document.getElementById('trackingOverlay').classList.add('hidden'); }
+
+async function lookupOrders(){
+  const phone = document.getElementById('trackPhone').value.trim();
+  const resultsEl = document.getElementById('trackResults');
+  if(!phone){ resultsEl.innerHTML = '<p class="text-zinc-500 text-sm text-center">Please enter your phone number.</p>'; return; }
+  resultsEl.innerHTML = '<p class="text-zinc-500 text-sm text-center">Searching...</p>';
+  const all = await getAllOrders();
+  const matches = all.filter(o => o.customer.phone.replace(/\s/g,'') === phone.replace(/\s/g,''));
+  if(matches.length===0){
+    resultsEl.innerHTML = '<p class="text-zinc-500 text-sm text-center">No orders found for this number.</p>';
+    return;
+  }
+  resultsEl.innerHTML = matches.map(o => renderOrderTrackCard(o)).join('');
+}
+function renderOrderTrackCard(o){
+  const idx = STATUSES.indexOf(o.status);
+  const cancelled = o.status === 'Cancelled';
+  const steps = STATUSES.map((s,i) => `
+    <div class="flex-1 text-center">
+      <div class="w-3 h-3 rounded-full mx-auto mb-1 ${cancelled ? 'bg-zinc-700' : (i<=idx ? 'bg-brand-gold' : 'bg-zinc-700')}"></div>
+      <p class="text-[10px] uppercase tracking-wider ${i<=idx && !cancelled ? 'text-brand-gold' : 'text-zinc-600'}">${s}</p>
+    </div>`).join('');
+  return `
+    <div class="border border-zinc-800 rounded-sm p-5">
+      <div class="flex justify-between items-center mb-3">
+        <p class="font-serif text-brand-gold font-bold">${o.id}</p>
+        <span class="text-xs px-2 py-1 rounded-sm ${cancelled?'bg-red-900/40 text-red-400':'bg-brand-gold/10 text-brand-gold'}">${o.status}</span>
+      </div>
+      ${cancelled ? '' : `<div class="flex mb-3">${steps}</div>`}
+      <p class="text-xs text-zinc-500 mb-1">${o.orderType} • ${new Date(o.createdAt).toLocaleString()}</p>
+      <p class="text-xs text-zinc-400">${o.items.map(i=>i.name+' x'+i.qty).join(', ')}</p>
+      <p class="text-sm text-white font-semibold mt-2">Total: PKR ${o.total.toLocaleString()}</p>
+    </div>`;
+}
+
+/* ============ ADMIN ============ */
+let adminStatusFilterVal = 'All';
+function openAdmin(){
+  document.getElementById('adminOverlay').classList.remove('hidden');
+}
+function closeAdmin(){ document.getElementById('adminOverlay').classList.add('hidden'); }
+function checkAdminPin(){
+  const val = document.getElementById('adminPin').value;
+  if(val === ADMIN_PIN){
+    document.getElementById('adminLoginView').classList.add('hidden');
+    document.getElementById('adminDashboard').classList.remove('hidden');
+    renderAdminStatusFilter();
+    loadAdminOrders();
+  } else {
+    alert('Incorrect PIN.');
+  }
+}
+function renderAdminStatusFilter(){
+  const opts = ['All', ...STATUSES, 'Cancelled'];
+  document.getElementById('adminStatusFilter').innerHTML = opts.map(s => `
+    <button onclick="setAdminFilter('${s}')" data-filter="${s}"
+      class="admin-filter-btn px-3 py-1.5 text-xs uppercase tracking-wider border rounded-sm ${s===adminStatusFilterVal ? 'border-brand-gold text-brand-gold' : 'border-zinc-700 text-zinc-400'}">
+      ${s}
+    </button>`).join('');
+}
+function setAdminFilter(s){
+  adminStatusFilterVal = s;
+  renderAdminStatusFilter();
+  loadAdminOrders();
+}
+async function loadAdminOrders(){
+  const listEl = document.getElementById('adminOrdersList');
+  const emptyEl = document.getElementById('adminEmptyMsg');
+  listEl.innerHTML = '<p class="text-zinc-500 text-sm text-center py-8">Loading orders...</p>';
+  const all = await getAllOrders();
+
+  // stats
+  const today = new Date().toDateString();
+  const todays = all.filter(o => new Date(o.createdAt).toDateString() === today);
+  const revenueToday = todays.filter(o=>o.status==='Completed').reduce((s,o)=>s+o.total,0);
+  const active = all.filter(o => o.status !== 'Completed' && o.status !== 'Cancelled');
+  document.getElementById('statOrdersToday').textContent = todays.length;
+  document.getElementById('statRevenueToday').textContent = 'PKR ' + revenueToday.toLocaleString();
+  document.getElementById('statActive').textContent = active.length;
+
+  const filtered = adminStatusFilterVal==='All' ? all : all.filter(o=>o.status===adminStatusFilterVal);
+  if(filtered.length===0){
+    listEl.innerHTML=''; emptyEl.classList.remove('hidden');
+    return;
+  }
+  emptyEl.classList.add('hidden');
+  listEl.innerHTML = filtered.map(o => `
+    <div class="glass-panel border border-zinc-800 rounded-sm p-5">
+      <div class="flex flex-wrap justify-between gap-3 mb-3">
+        <div>
+          <p class="font-serif text-brand-gold font-bold">${o.id}</p>
+          <p class="text-xs text-zinc-500">${o.customer.name} • ${o.customer.phone}</p>
+          <p class="text-xs text-zinc-500">${o.orderType}${o.customer.address ? ' — '+o.customer.address : ''}</p>
+        </div>
+        <div class="text-right">
+          <p class="text-xs text-zinc-500 mb-1">${new Date(o.createdAt).toLocaleString()}</p>
+          <select onchange="updateOrderStatus('${o.id}', this.value)" class="bg-brand-dark border border-zinc-700 text-white text-xs px-2 py-1.5 rounded-sm">
+            ${[...STATUSES,'Cancelled'].map(s=>`<option value="${s}" ${s===o.status?'selected':''}>${s}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <p class="text-xs text-zinc-400 mb-2">${o.items.map(i=>i.name+' x'+i.qty).join(', ')}</p>
+      ${o.notes ? `<p class="text-xs text-zinc-500 italic mb-2">Note: ${o.notes}</p>` : ''}
+      <p class="text-sm text-white font-semibold">Total: PKR ${o.total.toLocaleString()} <span class="text-zinc-500 font-normal">(${o.payment})</span></p>
+    </div>`).join('');
+}
+async function updateOrderStatus(id, status){
+  try{
+    const r = await window.storage.get('orders:'+id, true);
+    if(!r) return;
+    const order = JSON.parse(r.value);
+    order.status = status;
+    await window.storage.set('orders:'+id, JSON.stringify(order), true);
+    loadAdminOrders();
+  }catch(e){
+    alert('Could not update order status. Please try again.');
+  }
+}
+
+/* ============ INIT ============ */
+renderCategoryTabs();
+renderMenuList();
+renderDeals();
+renderCart();
+
+gsap.from(".hero-content", {duration:1.5, y:50, opacity:0, ease:"power3.out", delay:0.2});
+gsap.from(".about-image", {scrollTrigger:{trigger:"#about", start:"top 80%"}, x:-50, opacity:0, duration:1.2, ease:"power3.out"});
+gsap.from(".about-text", {scrollTrigger:{trigger:"#about", start:"top 80%"}, x:50, opacity:0, duration:1.2, ease:"power3.out"});
+gsap.from(".deal-card", {scrollTrigger:{trigger:"#deals", start:"top 80%"}, y:30, opacity:0, duration:0.8, stagger:0.15, ease:"power2.out"});
+
+lucide.createIcons();
+</script>
+</body>
+</html>
