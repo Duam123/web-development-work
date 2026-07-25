@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noor & Flame | Modern Karachi Culinary Art</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- GSAP & ScrollTrigger CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0A0B0D',
+                            card: '#121418',
+                            gold: '#D4AF37',
+                            'gold-hover': '#F3C623',
+                            muted: '#A1A1AA',
+                            crimson: '#8B0000'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0A0B0D;
+            color: #F4F4F5;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .hero-bg {
+            background: linear-gradient(to bottom, rgba(10, 11, 13, 0.6), rgba(10, 11, 13, 1)), 
+                        url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .glass-panel {
+            background: rgba(18, 20, 24, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 glass-panel border-b border-white/5 px-6 py-4 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" class="font-serif text-2xl font-bold tracking-wider text-brand-gold">
+                NOOR <span class="text-white">&</span> FLAME
+            </a>
+            
+            <div class="hidden md:flex space-x-8 text-sm tracking-wide text-zinc-300">
+                <a href="#about" class="hover:text-brand-gold transition-colors">OUR STORY</a>
+                <a href="#menu" class="hover:text-brand-gold transition-colors">SIGNATURE MENU</a>
+                <a href="#experience" class="hover:text-brand-gold transition-colors">THE EXPERIENCE</a>
+                <a href="#contact" class="hover:text-brand-gold transition-colors">LOCATION</a>
+            </div>
+
+            <a href="#reservation" class="px-5 py-2.5 bg-brand-gold text-black font-semibold text-xs tracking-widest uppercase hover:bg-brand-gold-hover transition-all duration-300 rounded-sm">
+                Reserve Table
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen hero-bg flex items-center justify-center pt-24 px-6">
+        <div class="max-w-4xl mx-auto text-center z-10 hero-content">
+            <span class="inline-block text-brand-gold text-xs font-semibold tracking-[0.3em] uppercase mb-4 border-b border-brand-gold/40 pb-1">
+                Clifton, Karachi
+            </span>
+            <h1 class="font-serif text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
+                Karachi Heritage,<br/><span class="italic font-normal text-brand-gold">Elevated.</span>
+            </h1>
+            <p class="text-zinc-400 text-lg md:text-xl font-light max-w-2xl mx-auto mb-10 leading-relaxed">
+                An intimate fusion of traditional charcoal live-fire grilling and contemporary fine dining overlooking the Arabian coast.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#menu" class="px-8 py-4 bg-brand-gold text-black font-semibold text-sm tracking-widest uppercase hover:bg-brand-gold-hover transition-all">
+                    Explore Menu
+                </a>
+                <a href="#reservation" class="px-8 py-4 border border-zinc-700 text-white font-semibold text-sm tracking-widest uppercase hover:border-brand-gold hover:text-brand-gold transition-all">
+                    Book an Evening
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About / Story Section -->
+    <section id="about" class="py-28 px-6 bg-brand-dark relative">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div class="about-image relative">
+                <div class="aspect-[4/5] rounded-sm overflow-hidden border border-brand-gold/20">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1000&auto=format&fit=crop" alt="Karachi Fine Dining Experience" class="w-full h-full object-cover">
+                </div>
+                <div class="absolute -bottom-8 -right-8 glass-panel p-6 hidden lg:block max-w-xs border border-brand-gold/30">
+                    <p class="font-serif italic text-brand-gold text-lg">"Where the spice routes of Sindh meet modern culinary precision."</p>
+                </div>
+            </div>
+            
+            <div class="about-text space-y-6">
+                <span class="text-brand-gold text-xs font-semibold tracking-widest uppercase">The Concept</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-white font-bold">Fire, Smoke & Craftsmanship</h2>
+                <p class="text-zinc-400 font-light leading-relaxed">
+                    Rooted in Karachi's vibrant food culture, Noor & Flame reinterprets iconic coastal and Mughlai flavors. We source hand-selected spices from Empress Market and prime cuts locally, prepared over open pit charcoal flames.
+                </p>
+                <div class="grid grid-cols-2 gap-6 pt-4 border-t border-zinc-800">
+                    <div>
+                        <h4 class="font-serif text-2xl text-brand-gold mb-1">100%</h4>
+                        <p class="text-xs text-zinc-500 uppercase tracking-wider">Organic Local Sourcing</p>
+                    </div>
+                    <div>
+                        <h4 class="font-serif text-2xl text-brand-gold mb-1">Wood-Fired</h4>
+                        <p class="text-xs text-zinc-500 uppercase tracking-wider">Coal & Pit Technique</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signature Menu Section -->
+    <section id="menu" class="py-28 px-6 bg-brand-card relative">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16 section-header">
+                <span class="text-brand-gold text-xs font-semibold tracking-widest uppercase">Curated Offerings</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-white font-bold mt-2">Signature Menu</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-10">
+                <!-- Menu Item 1 -->
+                <div class="menu-item flex justify-between items-start border-b border-zinc-800 pb-6">
+                    <div class="pr-4">
+                        <h3 class="font-serif text-xl text-white font-medium mb-1">Truffle Nihari Osso Buco</h3>
+                        <p class="text-sm text-zinc-400 font-light">Slow-braised veal shank, black truffle infusion, crispy ginger, gold leaf heirloom naan.</p>
+                    </div>
+                    <span class="font-serif text-lg text-brand-gold font-semibold">PKR 3,800</span>
+                </div>
+
+                <!-- Menu Item 2 -->
+                <div class="menu-item flex justify-between items-start border-b border-zinc-800 pb-6">
+                    <div class="pr-4">
+                        <h3 class="font-serif text-xl text-white font-medium mb-1">Smoked Charcoal Sajji</h3>
+                        <p class="text-sm text-zinc-400 font-light">Whole organic chicken marinated in wild rock salt & pomegranate molasses, pit-roasted.</p>
+                    </div>
+                    <span class="font-serif text-lg text-brand-gold font-semibold">PKR 2,950</span>
+                </div>
+
+                <!-- Menu Item 3 -->
+                <div class="menu-item flex justify-between items-start border-b border-zinc-800 pb-6">
+                    <div class="pr-4">
+                        <h3 class="font-serif text-xl text-white font-medium mb-1">Arabian Gulf Prawn Karahi</h3>
+                        <p class="text-sm text-zinc-400 font-light">Jumbo tiger prawns, heirloom tomato reduction, roasted green chillies, fenugreek butter.</p>
+                    </div>
+                    <span class="font-serif text-lg text-brand-gold font-semibold">PKR 4,200</span>
+                </div>
+
+                <!-- Menu Item 4 -->
+                <div class="menu-item flex justify-between items-start border-b border-zinc-800 pb-6">
+                    <div class="pr-4">
+                        <h3 class="font-serif text-xl text-white font-medium mb-1">Saffron & Rose Kheer Tart</h3>
+                        <p class="text-sm text-zinc-400 font-light">Cardamom pastry shell, condensed pistachio rabri, candied rose petals, silver leaf.</p>
+                    </div>
+                    <span class="font-serif text-lg text-brand-gold font-semibold">PKR 1,450</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation Section -->
+    <section id="reservation" class="py-28 px-6 bg-brand-dark relative">
+        <div class="max-w-3xl mx-auto glass-panel p-10 md:p-14 rounded-sm border border-brand-gold/20">
+            <div class="text-center mb-10">
+                <span class="text-brand-gold text-xs font-semibold tracking-widest uppercase">Reserve A Table</span>
+                <h2 class="font-serif text-3xl md:text-4xl text-white font-bold mt-2">Join Us For Dinner</h2>
+            </div>
+
+            <form class="space-y-6" onsubmit="event.preventDefault(); alert('Reservation Request Received!');">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2">Full Name</label>
+                        <input type="text" required placeholder="Faraz Ali" class="w-full bg-brand-dark/80 border border-zinc-800 text-white px-4 py-3 text-sm focus:outline-none focus:border-brand-gold transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2">Phone Number</label>
+                        <input type="tel" required placeholder="+92 300 1234567" class="w-full bg-brand-dark/80 border border-zinc-800 text-white px-4 py-3 text-sm focus:outline-none focus:border-brand-gold transition-colors">
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2">Guests</label>
+                        <select class="w-full bg-brand-dark/80 border border-zinc-800 text-white px-4 py-3 text-sm focus:outline-none focus:border-brand-gold transition-colors">
+                            <option>2 Persons</option>
+                            <option>4 Persons</option>
+                            <option>6+ Guests</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2">Date</label>
+                        <input type="date" required class="w-full bg-brand-dark/80 border border-zinc-800 text-white px-4 py-3 text-sm focus:outline-none focus:border-brand-gold transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-zinc-400 mb-2">Time Slot</label>
+                        <select class="w-full bg-brand-dark/80 border border-zinc-800 text-white px-4 py-3 text-sm focus:outline-none focus:border-brand-gold transition-colors">
+                            <option>07:30 PM</option>
+                            <option>09:00 PM</option>
+                            <option>10:30 PM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-4 bg-brand-gold text-black font-semibold text-xs tracking-widest uppercase hover:bg-brand-gold-hover transition-all">
+                    Confirm Reservation
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-black py-16 px-6 border-t border-zinc-900">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-10 text-center md:text-left">
+            <div>
+                <h3 class="font-serif text-xl font-bold text-brand-gold mb-4">NOOR & FLAME</h3>
+                <p class="text-sm text-zinc-500 max-w-sm">Block 4, Scheme 5, Clifton,<br/>Karachi, Sindh, Pakistan</p>
+            </div>
+            <div>
+                <h4 class="text-xs uppercase tracking-widest text-zinc-400 mb-4">Hours of Operation</h4>
+                <p class="text-sm text-zinc-500">Tuesday – Sunday: 7:00 PM – 1:00 AM</p>
+                <p class="text-sm text-zinc-500">Mondays: Closed</p>
+            </div>
+            <div>
+                <h4 class="text-xs uppercase tracking-widest text-zinc-400 mb-4">Contact & Inquiries</h4>
+                <p class="text-sm text-zinc-500">+92 21 35870000</p>
+                <p class="text-sm text-zinc-500">reservations@noorandflame.pk</p>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto border-t border-zinc-900 mt-12 pt-6 text-center text-xs text-zinc-600">
+            © 2026 Noor & Flame Karachi. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- GSAP Animations Script -->
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Animation
+        gsap.from(".hero-content", {
+            duration: 1.5,
+            y: 50,
+            opacity: 0,
+            ease: "power3.out",
+            delay: 0.2
+        });
+
+        // About Section Scroll Animation
+        gsap.from(".about-image", {
+            scrollTrigger: {
+                trigger: "#about",
+                start: "top 80%"
+            },
+            x: -50,
+            opacity: 0,
+            duration: 1.2,
+            ease: "power3.out"
+        });
+
+        gsap.from(".about-text", {
+            scrollTrigger: {
+                trigger: "#about",
+                start: "top 80%"
+            },
+            x: 50,
+            opacity: 0,
+            duration: 1.2,
+            ease: "power3.out"
+        });
+
+        // Menu Items Stagger Animation
+        gsap.from(".menu-item", {
+            scrollTrigger: {
+                trigger: "#menu",
+                start: "top 75%"
+            },
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "power2.out"
+        });
+
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
