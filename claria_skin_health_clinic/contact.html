@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact &amp; Book — Claria Skin Health</title>
+<meta name="description" content="Book a screening at Claria Skin Health in Toronto. Find our address, phone, hours and answers to common questions.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="13" stroke="#1B2430" stroke-width="2"/>
+        <path d="M20 3V9M20 31V37M3 20H9M31 20H37" stroke="#1FAE93" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="20" cy="20" r="4" fill="#FF6152"/>
+      </svg>
+      <span class="brand-word">Claria<small>Skin Health · Toronto</small></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="contact.html" class="btn btn-coral btn-sm">Book a Screening</a>
+      <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a> / Contact</div>
+    <div class="eyebrow">Get In Touch</div>
+    <h1 style="font-size:clamp(2.1rem,4vw,3rem);">Let's get your assessment on the books.</h1>
+    <p style="max-width:560px;">Fill in the form and our care team will call within one business day to confirm a time — or reach us directly with the details on the right.</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container contact-grid">
+    <div>
+      <div class="contact-form-card">
+        <form id="appointmentForm" novalidate>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" data-required>
+              <div class="form-error">Please enter your name.</div>
+            </div>
+            <div class="form-field">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="+1 (416) 555-0148" data-required>
+              <div class="form-error">Please enter a valid phone number.</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" data-required>
+              <div class="form-error">Please enter a valid email address.</div>
+            </div>
+            <div class="form-field">
+              <label for="preferredDate">Preferred Date</label>
+              <input type="date" id="preferredDate" name="preferredDate" data-required>
+              <div class="form-error">Please choose a preferred date.</div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="concern">What brings you in?</label>
+            <select id="concern" name="concern" data-required>
+              <option value="" disabled selected>Choose a concern...</option>
+              <option value="acne">Acne Treatment</option>
+              <option value="eczema-rosacea">Eczema &amp; Rosacea Care</option>
+              <option value="mole-screening">Mole &amp; Skin Cancer Screening</option>
+              <option value="chemical-peel">Chemical Peel</option>
+              <option value="laser-resurfacing">Laser Resurfacing</option>
+              <option value="anti-aging">Anti-Aging Consultation</option>
+              <option value="ai-scan">AI Skin Analysis</option>
+              <option value="patch-testing">Allergy Patch Testing</option>
+              <option value="general">Not sure yet — general consultation</option>
+            </select>
+            <div class="form-error">Please choose a concern.</div>
+          </div>
+
+          <div class="form-field">
+            <label for="message">Anything we should know? (optional)</label>
+            <textarea id="message" name="message" rows="4" placeholder="Symptoms, duration, past treatments, insurance questions..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-coral">Request Appointment</button>
+          <p class="note" style="margin-top:14px;">We'll call to confirm — this form doesn't book an exact slot automatically.</p>
+        </form>
+
+        <div class="form-success" id="formSuccess">
+          <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 13L9 17L19 7" stroke="#1FAE93" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Request received!</h3>
+          <p>Thanks — our care team will call you within one business day to confirm your appointment.</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card info-card">
+        <div class="info-row">
+          <div class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 21C16.5 17.5 20 13.9 20 9.8C20 6.6 17.5 4 14.5 4C13 4 11.7 4.7 12 6C12.3 4.7 11 4 9.5 4C6.5 4 4 6.6 4 9.8C4 13.9 7.5 17.5 12 21Z" stroke="#1FAE93" stroke-width="1.6"/></svg></div>
+          <div><h4>Address</h4><p>220 Bay Street, Toronto, ON, Canada</p></div>
+        </div>
+        <div class="info-row">
+          <div class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 3H9L11 8L8.5 9.5C9.5 11.5 11.5 13.5 13.5 14.5L15 12L20 14V17C20 18.1 19.1 19 18 19C10.3 19 4 12.7 4 5C4 3.9 4.9 3 6 3Z" stroke="#1FAE93" stroke-width="1.6"/></svg></div>
+          <div><h4>Phone</h4><p>+1 (416) 555-0148</p></div>
+        </div>
+        <div class="info-row">
+          <div class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="#1FAE93" stroke-width="1.6"/><path d="M3 7L12 13L21 7" stroke="#1FAE93" stroke-width="1.6"/></svg></div>
+          <div><h4>Email</h4><p>hello@clariaskin.ca</p></div>
+        </div>
+        <div class="info-row" style="margin-bottom:0;">
+          <div class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="#1FAE93" stroke-width="1.6"/><path d="M12 7V12L15.5 14" stroke="#1FAE93" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+          <div><h4>Hours</h4><p>Mon–Sat, 9am–6pm · Closed Sundays</p></div>
+        </div>
+      </div>
+
+      <div class="map-frame">
+        <iframe
+          src="https://maps.google.com/maps?q=220%20Bay%20Street%2C%20Toronto%2C%20ON&t=&z=14&ie=UTF8&output=embed"
+          title="Claria Skin Health location in Toronto"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section band-mint">
+  <div class="container" style="max-width:760px;">
+    <div class="section-head center">
+      <div class="eyebrow">Before You Book</div>
+      <h2>A few things people usually ask</h2>
+    </div>
+
+    <div class="faq-item">
+      <span class="index-num">01</span>
+      <div class="faq-q">Do I need a referral to book an appointment?<span class="plus">+</span></div>
+      <div class="faq-a"><p>No referral needed for a general consultation or AI skin analysis. Some insurance plans may require one for specialist follow-up — ask when you call.</p></div>
+    </div>
+    <div class="faq-item">
+      <span class="index-num">02</span>
+      <div class="faq-q">Is the AI skin analysis a substitute for seeing a dermatologist?<span class="plus">+</span></div>
+      <div class="faq-a"><p>No — it's a data point. A board-certified dermatologist always reviews the scan and examines you in person before anything is diagnosed or treated.</p></div>
+    </div>
+    <div class="faq-item">
+      <span class="index-num">03</span>
+      <div class="faq-q">How often should I get a mole screening?<span class="plus">+</span></div>
+      <div class="faq-a"><p>Once a year for most people, more often if you have a personal or family history of skin cancer — your dermatologist will recommend a schedule at your first visit.</p></div>
+    </div>
+    <div class="faq-item">
+      <span class="index-num">04</span>
+      <div class="faq-q">Do you accept insurance?<span class="plus">+</span></div>
+      <div class="faq-a"><p>Medical dermatology visits are often covered under provincial or private insurance; cosmetic treatments typically aren't. We'll confirm coverage before you're billed.</p></div>
+    </div>
+    <div class="faq-item">
+      <span class="index-num">05</span>
+      <div class="faq-q">What's your cancellation policy?<span class="plus">+</span></div>
+      <div class="faq-a"><p>Give us at least 4 hours' notice so we can offer the slot to someone else — no charge for cancellations made ahead of time.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-watermark">CLARIA</span>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Claria</div>
+        <p style="color:rgba(244,245,243,0.6); font-size:0.88rem; max-width:260px;">A skin health center in Toronto built on one idea: diagnose properly, then treat.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">Acne Treatment</a></li>
+          <li><a href="services.html">Eczema &amp; Rosacea Care</a></li>
+          <li><a href="services.html">Mole Screening</a></li>
+          <li><a href="services.html">AI Skin Analysis</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <ul>
+          <li>220 Bay Street, Toronto, ON</li>
+          <li>+1 (416) 555-0148</li>
+          <li>hello@clariaskin.ca</li>
+          <li>Mon–Sat, 9am–6pm</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Claria Skin Health. All rights reserved.</span>
+      <span>Toronto, Canada</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>
