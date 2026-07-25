@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vertex IT Institute | Where Careers Compile</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          paper: '#F5F6F8',
+          surface: '#FFFFFF',
+          ink: '#10131A',
+          muted: '#5B6270',
+          border: '#E2E4EA',
+          vertex: { DEFAULT: '#3D4FFF', dark: '#2D3BD1', tint: '#EEF0FF' },
+          amber: { DEFAULT: '#FFB020', hover: '#FFC252' },
+          teal: { DEFAULT: '#16C79A', tint: '#E4FBF4' }
+        },
+        fontFamily: {
+          display: ['Space Grotesk', 'sans-serif'],
+          sans: ['Inter', 'sans-serif'],
+          mono: ['JetBrains Mono', 'monospace']
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body{background-color:#F5F6F8;color:#10131A;font-family:'Inter',sans-serif;overflow-x:hidden;}
+  .course-code{font-family:'JetBrains Mono',monospace;letter-spacing:0.02em;}
+  .node-line{stroke-dasharray: 400; stroke-dashoffset: 400;}
+  .glass{background:rgba(255,255,255,0.85);backdrop-filter:blur(10px);}
+  ::-webkit-scrollbar{width:8px;}
+  ::-webkit-scrollbar-track{background:#F5F6F8;}
+  ::-webkit-scrollbar-thumb{background:#D3D6DE;border-radius:4px;}
+  .tab-active{background:#10131A !important;color:#fff !important;}
+  input:focus, select:focus, textarea:focus{outline:none;}
+  .drawer{transition:transform .35s cubic-bezier(.16,1,.3,1);}
+  .overlay{transition:opacity .25s ease;}
+  .scale-in{animation:scaleIn .25s ease;}
+  @keyframes scaleIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+  .qty-btn{transition:all .15s ease;}
+</style>
+</head>
+<body class="bg-paper">
+
+<!-- ================= NAV ================= -->
+<nav class="fixed top-0 left-0 w-full z-40 glass border-b border-border px-6 py-4">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <a href="#" class="font-display text-xl font-bold tracking-tight text-ink flex items-center gap-2">
+      <span class="w-2.5 h-2.5 rounded-full bg-vertex inline-block"></span>
+      VERTEX <span class="text-vertex">IT</span> INSTITUTE
+    </a>
+    <div class="hidden md:flex space-x-8 text-sm font-medium text-muted">
+      <a href="#courses" class="hover:text-vertex transition-colors">Courses</a>
+      <a href="#instructors" class="hover:text-vertex transition-colors">Instructors</a>
+      <a href="#testimonials" class="hover:text-vertex transition-colors">Success Stories</a>
+      <button onclick="openTracking()" class="hover:text-vertex transition-colors">Track Application</button>
+      <button onclick="openAdmin()" class="hover:text-vertex transition-colors">Admin</button>
+    </div>
+    <a href="#courses" class="px-5 py-2.5 bg-ink text-white font-semibold text-sm hover:bg-vertex transition-all duration-300 rounded-md">Apply Now</a>
+  </div>
+</nav>
+
+<!-- ================= HERO w/ pathway signature ================= -->
+<section class="relative min-h-screen flex items-center pt-24 px-6 overflow-hidden">
+  <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center w-full">
+    <div class="hero-content">
+      <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-vertex bg-vertex-tint px-3 py-1.5 rounded-full mb-6">
+        <i data-lucide="git-branch" class="w-3.5 h-3.5"></i> Structured Learning Pathways
+      </span>
+      <h1 class="font-display text-5xl md:text-6xl font-bold text-ink leading-[1.1] mb-6">
+        Where Careers <span class="text-vertex">Compile.</span>
+      </h1>
+      <p class="text-muted text-lg font-light max-w-xl mb-10 leading-relaxed">
+        Cohort-based programs in web development, data science, cybersecurity, and cloud engineering — built as prerequisite pathways, not disconnected classes.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a href="#courses" class="px-8 py-4 bg-ink text-white font-semibold text-sm hover:bg-vertex transition-all rounded-md text-center">Browse Courses</a>
+        <button onclick="openTracking()" class="px-8 py-4 border border-border text-ink font-semibold text-sm hover:border-vertex hover:text-vertex transition-all rounded-md">Track My Application</button>
+      </div>
+      <div class="grid grid-cols-3 gap-6 pt-10 mt-10 border-t border-border">
+        <div><p class="font-display text-2xl font-bold text-ink">2,400+</p><p class="text-xs text-muted uppercase tracking-wider">Graduates</p></div>
+        <div><p class="font-display text-2xl font-bold text-ink">87%</p><p class="text-xs text-muted uppercase tracking-wider">Placement Rate</p></div>
+        <div><p class="font-display text-2xl font-bold text-ink">11</p><p class="text-xs text-muted uppercase tracking-wider">Active Programs</p></div>
+      </div>
+    </div>
+
+    <!-- Signature: animated pathway graph -->
+    <div class="relative hidden lg:block">
+      <svg id="pathwaySvg" viewBox="0 0 480 420" class="w-full h-auto">
+        <line class="node-line" x1="90" y1="80" x2="220" y2="60" stroke="#D3D6DE" stroke-width="2"/>
+        <line class="node-line" x1="220" y1="60" x2="360" y2="90" stroke="#D3D6DE" stroke-width="2"/>
+        <line class="node-line" x1="90" y1="80" x2="150" y2="200" stroke="#D3D6DE" stroke-width="2"/>
+        <line class="node-line" x1="150" y1="200" x2="300" y2="210" stroke="#D3D6DE" stroke-width="2"/>
+        <line class="node-line" x1="300" y1="210" x2="360" y2="90" stroke="#D3D6DE" stroke-width="2"/>
+        <line class="node-line" x1="150" y1="200" x2="120" y2="330" stroke="#D3D6DE" stroke-width="2"/>
+        <line class="node-line" x1="300" y1="210" x2="330" y2="330" stroke="#D3D6DE" stroke-width="2"/>
+        <line class="node-line" x1="120" y1="330" x2="330" y2="330" stroke="#D3D6DE" stroke-width="2"/>
+
+        <g class="pathway-node"><circle cx="90" cy="80" r="26" fill="#EEF0FF" stroke="#3D4FFF" stroke-width="2"/><text x="90" y="85" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#3D4FFF">WD101</text></g>
+        <g class="pathway-node"><circle cx="220" cy="60" r="26" fill="#EEF0FF" stroke="#3D4FFF" stroke-width="2"/><text x="220" y="65" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#3D4FFF">DS101</text></g>
+        <g class="pathway-node"><circle cx="360" cy="90" r="26" fill="#E4FBF4" stroke="#16C79A" stroke-width="2"/><text x="360" y="95" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#0E8F6F">CY101</text></g>
+        <g class="pathway-node"><circle cx="150" cy="200" r="26" fill="#EEF0FF" stroke="#3D4FFF" stroke-width="2"/><text x="150" y="205" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#3D4FFF">WD201</text></g>
+        <g class="pathway-node"><circle cx="300" cy="210" r="26" fill="#FFF6E8" stroke="#FFB020" stroke-width="2"/><text x="300" y="215" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#B8781A">DS201</text></g>
+        <g class="pathway-node"><circle cx="120" cy="330" r="26" fill="#EEF0FF" stroke="#3D4FFF" stroke-width="2"/><text x="120" y="335" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#3D4FFF">WD301</text></g>
+        <g class="pathway-node"><circle cx="330" cy="330" r="26" fill="#E4FBF4" stroke="#16C79A" stroke-width="2"/><text x="330" y="335" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#0E8F6F">AI201</text></g>
+      </svg>
+      <p class="text-center text-xs text-muted -mt-4">Example pathway: foundation → specialization → capstone</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHY US ================= -->
+<section id="about" class="py-24 px-6 bg-surface border-y border-border">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
+    <div class="border-l-2 border-vertex pl-5">
+      <i data-lucide="layers" class="w-6 h-6 text-vertex mb-3"></i>
+      <h3 class="font-display text-lg font-bold text-ink mb-2">Pathway-based Curriculum</h3>
+      <p class="text-sm text-muted leading-relaxed">Every course has a defined prerequisite and next step, so you always know what to learn next and why.</p>
+    </div>
+    <div class="border-l-2 border-teal pl-5">
+      <i data-lucide="users" class="w-6 h-6 text-teal mb-3"></i>
+      <h3 class="font-display text-lg font-bold text-ink mb-2">Small Cohorts</h3>
+      <p class="text-sm text-muted leading-relaxed">Capped seats per cohort mean direct instructor feedback, not a lecture hall of hundreds.</p>
+    </div>
+    <div class="border-l-2 border-amber pl-5">
+      <i data-lucide="briefcase" class="w-6 h-6 text-amber mb-3"></i>
+      <h3 class="font-display text-lg font-bold text-ink mb-2">Industry Capstones</h3>
+      <p class="text-sm text-muted leading-relaxed">Every advanced-level course ends in a portfolio project reviewed by hiring partners.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COURSES ================= -->
+<section id="courses" class="py-28 px-6 bg-paper">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12">
+      <span class="text-vertex text-xs font-semibold tracking-widest uppercase">Programs</span>
+      <h2 class="font-display text-4xl md:text-5xl text-ink font-bold mt-2">Course Catalog</h2>
+    </div>
+    <div id="trackTabs" class="flex flex-wrap justify-center gap-2 mb-12"></div>
+    <div id="courseList" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </div>
+</section>
+
+<!-- ================= INSTRUCTORS ================= -->
+<section id="instructors" class="py-28 px-6 bg-surface border-y border-border">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12">
+      <span class="text-vertex text-xs font-semibold tracking-widest uppercase">Faculty</span>
+      <h2 class="font-display text-4xl md:text-5xl text-ink font-bold mt-2">Learn From Practitioners</h2>
+    </div>
+    <div id="instructorList" class="grid md:grid-cols-4 gap-6"></div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<section id="testimonials" class="py-28 px-6 bg-paper">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12">
+      <span class="text-vertex text-xs font-semibold tracking-widest uppercase">Alumni</span>
+      <h2 class="font-display text-4xl md:text-5xl text-ink font-bold mt-2">Success Stories</h2>
+    </div>
+    <div id="testimonialList" class="grid md:grid-cols-3 gap-6"></div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer id="contact" class="bg-ink text-white py-16 px-6">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-10 text-center md:text-left">
+    <div><h3 class="font-display text-xl font-bold text-white mb-4">VERTEX <span class="text-vertex">IT</span> INSTITUTE</h3>
+      <p class="text-sm text-zinc-400 max-w-sm">Suite 4B, Techno City Tower, Shahrah-e-Faisal,<br/>Karachi, Sindh, Pakistan</p></div>
+    <div><h4 class="text-xs uppercase tracking-widest text-zinc-500 mb-4">Admissions Hours</h4>
+      <p class="text-sm text-zinc-400">Monday – Saturday: 10:00 AM – 7:00 PM</p>
+      <p class="text-sm text-zinc-400">Sunday: Closed</p></div>
+    <div><h4 class="text-xs uppercase tracking-widest text-zinc-500 mb-4">Contact</h4>
+      <p class="text-sm text-zinc-400">+92 21 3456 7890</p>
+      <p class="text-sm text-zinc-400">admissions@vertexit.pk</p></div>
+  </div>
+  <div class="max-w-7xl mx-auto border-t border-zinc-800 mt-12 pt-6 text-center text-xs text-zinc-600">© 2026 Vertex IT Institute. All rights reserved.</div>
+</footer>
+
+<!-- ================= APPLICATION DRAWER ================= -->
+<div id="cartOverlay" class="overlay hidden fixed inset-0 bg-black/50 z-50 opacity-0" onclick="closeApply()"></div>
+<div id="applyDrawer" class="drawer fixed top-0 right-0 h-full w-full sm:w-[460px] bg-surface border-l border-border z-50 translate-x-full flex flex-col">
+  <div class="flex items-center justify-between px-6 py-5 border-b border-border">
+    <h3 class="font-display text-xl text-ink font-bold" id="drawerTitle">Apply Now</h3>
+    <button onclick="closeApply()" class="text-muted hover:text-vertex"><i data-lucide="x" class="w-5 h-5"></i></button>
+  </div>
+
+  <div id="applyFormView" class="flex-1 overflow-y-auto px-6 py-5">
+    <form id="applyForm" onsubmit="submitApplication(event)" class="space-y-4">
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-muted mb-2">Course</label>
+        <select id="appCourse" required class="w-full bg-paper border border-border text-ink px-4 py-3 text-sm rounded-md focus:border-vertex"></select>
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-muted mb-2">Full Name</label>
+        <input id="appName" required type="text" placeholder="Sana Khan" class="w-full bg-paper border border-border text-ink px-4 py-3 text-sm rounded-md focus:border-vertex">
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div><label class="block text-xs uppercase tracking-wider text-muted mb-2">Phone</label>
+          <input id="appPhone" required type="tel" placeholder="+92 300 1234567" class="w-full bg-paper border border-border text-ink px-4 py-3 text-sm rounded-md focus:border-vertex"></div>
+        <div><label class="block text-xs uppercase tracking-wider text-muted mb-2">Email</label>
+          <input id="appEmail" required type="email" placeholder="sana@email.com" class="w-full bg-paper border border-border text-ink px-4 py-3 text-sm rounded-md focus:border-vertex"></div>
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-muted mb-2">Highest Qualification</label>
+        <select id="appQualification" class="w-full bg-paper border border-border text-ink px-4 py-3 text-sm rounded-md focus:border-vertex">
+          <option>Intermediate / A-Levels</option><option>Bachelor's Degree</option><option>Master's Degree</option><option>Other</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs uppercase tracking-wider text-muted mb-2">Why this course? (optional)</label>
+        <textarea id="appNotes" rows="3" placeholder="Tell us a bit about your goals" class="w-full bg-paper border border-border text-ink px-4 py-3 text-sm rounded-md focus:border-vertex"></textarea>
+      </div>
+      <div class="border-t border-border pt-4 flex justify-between text-sm">
+        <span class="text-muted">Program Fee</span>
+        <span class="font-semibold text-ink" id="appFee">PKR 0</span>
+      </div>
+      <button type="submit" class="w-full py-4 bg-ink text-white font-semibold text-xs tracking-widest uppercase hover:bg-vertex transition-all rounded-md">Submit Application</button>
+    </form>
+  </div>
+
+  <div id="confirmView" class="hidden flex-1 overflow-y-auto px-6 py-10 text-center">
+    <i data-lucide="check-circle-2" class="w-14 h-14 text-teal mx-auto mb-4"></i>
+    <h4 class="font-display text-2xl text-ink font-bold mb-2">Application Submitted!</h4>
+    <p class="text-muted text-sm mb-4">Your application ID is</p>
+    <p class="text-vertex font-mono text-xl font-bold mb-6" id="confirmAppId">—</p>
+    <p class="text-muted text-xs mb-8">Save this ID to track your application status anytime.</p>
+    <button onclick="closeApply()" class="w-full py-4 border border-border text-ink font-semibold text-xs tracking-widest uppercase hover:border-vertex hover:text-vertex transition-all rounded-md">Done</button>
+  </div>
+</div>
+
+<!-- ================= TRACK APPLICATION OVERLAY ================= -->
+<div id="trackingOverlay" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center px-6">
+  <div class="bg-surface border border-border max-w-lg w-full rounded-lg p-8 scale-in max-h-[85vh] overflow-y-auto">
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="font-display text-2xl text-ink font-bold">Track Your Application</h3>
+      <button onclick="closeTracking()" class="text-muted hover:text-vertex"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    <div class="flex gap-3 mb-6">
+      <input id="trackContact" type="text" placeholder="Phone or email used to apply" class="flex-1 bg-paper border border-border text-ink px-4 py-3 text-sm rounded-md focus:border-vertex">
+      <button onclick="lookupApplications()" class="px-5 bg-ink text-white font-semibold text-xs uppercase tracking-widest rounded-md hover:bg-vertex">Search</button>
+    </div>
+    <div id="trackResults" class="space-y-6"></div>
+  </div>
+</div>
+
+<!-- ================= ADMIN OVERLAY ================= -->
+<div id="adminOverlay" class="hidden fixed inset-0 bg-white z-50 overflow-y-auto px-6 py-10">
+  <div class="max-w-5xl mx-auto">
+    <div class="flex justify-between items-center mb-8">
+      <h3 class="font-display text-3xl text-ink font-bold">Admissions Dashboard</h3>
+      <button onclick="closeAdmin()" class="text-muted hover:text-vertex"><i data-lucide="x" class="w-6 h-6"></i></button>
+    </div>
+
+    <div id="adminLoginView" class="max-w-sm mx-auto bg-paper border border-border rounded-lg p-8 mt-16">
+      <p class="text-xs uppercase tracking-widest text-muted mb-3">Staff Access</p>
+      <input id="adminPin" type="password" placeholder="Enter PIN" class="w-full bg-white border border-border text-ink px-4 py-3 text-sm mb-4 rounded-md focus:border-vertex">
+      <button onclick="checkAdminPin()" class="w-full py-3 bg-ink text-white font-semibold text-xs tracking-widest uppercase hover:bg-vertex rounded-md">Login</button>
+      <p class="text-muted text-xs mt-4">Demo PIN: 1234</p>
+    </div>
+
+    <div id="adminDashboard" class="hidden">
+      <div class="grid sm:grid-cols-4 gap-4 mb-8">
+        <div class="bg-paper border border-border p-5 rounded-lg"><p class="text-xs text-muted uppercase tracking-wider mb-1">Total Applications</p><p id="statTotal" class="font-display text-3xl text-ink font-bold">0</p></div>
+        <div class="bg-paper border border-border p-5 rounded-lg"><p class="text-xs text-muted uppercase tracking-wider mb-1">Today</p><p id="statToday" class="font-display text-3xl text-ink font-bold">0</p></div>
+        <div class="bg-paper border border-border p-5 rounded-lg"><p class="text-xs text-muted uppercase tracking-wider mb-1">Pending Review</p><p id="statPending" class="font-display text-3xl text-amber font-bold">0</p></div>
+        <div class="bg-paper border border-border p-5 rounded-lg"><p class="text-xs text-muted uppercase tracking-wider mb-1">Enrolled</p><p id="statEnrolled" class="font-display text-3xl text-teal font-bold">0</p></div>
+      </div>
+
+      <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
+        <div id="adminStatusFilter" class="flex flex-wrap gap-2"></div>
+        <button onclick="loadAdminApplications()" class="text-xs text-vertex flex items-center gap-1"><i data-lucide="refresh-cw" class="w-3 h-3"></i> Refresh</button>
+      </div>
+
+      <div id="adminAppList" class="space-y-4"></div>
+      <p id="adminEmptyMsg" class="hidden text-muted text-sm text-center py-16">No applications yet.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+lucide.createIcons();
+gsap.registerPlugin(ScrollTrigger);
+
+/* ============ DATA ============ */
+const COURSES = [
+  {id:'WD101', track:'Web Development', name:'Foundations of Web Development', desc:'HTML, CSS, JavaScript & responsive design fundamentals.', duration:'8 weeks', level:'Beginner', fee:45000, seats:30},
+  {id:'WD201', track:'Web Development', name:'Full-Stack MERN Development', desc:'MongoDB, Express, React & Node — build and ship real apps.', duration:'12 weeks', level:'Intermediate', fee:85000, seats:25},
+  {id:'WD301', track:'Web Development', name:'Advanced React & System Design', desc:'Scalable architecture, performance, and interview-grade system design.', duration:'10 weeks', level:'Advanced', fee:95000, seats:20},
+  {id:'DS101', track:'Data Science', name:'Python for Data Analysis', desc:'Pandas, NumPy & visualization for real-world datasets.', duration:'8 weeks', level:'Beginner', fee:50000, seats:30},
+  {id:'DS201', track:'Data Science', name:'Machine Learning Foundations', desc:'Supervised & unsupervised learning, model evaluation.', duration:'12 weeks', level:'Intermediate', fee:95000, seats:25},
+  {id:'DS301', track:'Data Science', name:'Deep Learning & MLOps', desc:'Neural networks, deployment pipelines, and monitoring in production.', duration:'14 weeks', level:'Advanced', fee:120000, seats:20},
+  {id:'CY101', track:'Cybersecurity', name:'Network Security Fundamentals', desc:'Core networking, firewalls, and threat detection basics.', duration:'8 weeks', level:'Beginner', fee:55000, seats:25},
+  {id:'CY201', track:'Cybersecurity', name:'Ethical Hacking & Pen Testing', desc:'Reconnaissance, exploitation, and reporting, hands-on in labs.', duration:'10 weeks', level:'Intermediate', fee:90000, seats:20},
+  {id:'CD101', track:'Cloud & DevOps', name:'Cloud Computing Essentials', desc:'Core AWS & Azure services, IAM, and cost management.', duration:'8 weeks', level:'Beginner', fee:60000, seats:25},
+  {id:'CD201', track:'Cloud & DevOps', name:'DevOps Engineering', desc:'Docker, Kubernetes, CI/CD pipelines end to end.', duration:'12 weeks', level:'Intermediate', fee:100000, seats:20},
+  {id:'AI201', track:'AI & Emerging Tech', name:'Generative AI & LLM Engineering', desc:'Prompt engineering, RAG pipelines, and fine-tuning basics.', duration:'10 weeks', level:'Intermediate', fee:110000, seats:20},
+];
+
+const INSTRUCTORS = [
+  {name:'Ayesha Raza', role:'Lead Data Science Instructor', bio:'8 years building ML pipelines for fintech products.'},
+  {name:'Bilal Ahmed', role:'Full-Stack Engineering Lead', bio:'Ex-startup CTO, ships production React & Node apps.'},
+  {name:'Sarah Malik', role:'Cybersecurity Instructor', bio:'Certified penetration tester and security auditor.'},
+  {name:'Hamza Sheikh', role:'Cloud & DevOps Instructor', bio:'AWS-certified solutions architect, 6 years in infra.'},
+];
+
+const TESTIMONIALS = [
+  {name:'Fatima N.', course:'DS201 Graduate', quote:'The pathway structure meant I never felt lost — each course built directly on the last.'},
+  {name:'Omar S.', course:'WD201 Graduate', quote:'Landed a junior developer role two weeks after the capstone review.'},
+  {name:'Zainab A.', course:'CY201 Graduate', quote:'Small cohort size meant real feedback on every lab, not just a grade.'},
+];
+
+const TRACKS = [...new Set(COURSES.map(c=>c.track))];
+const STATUSES = ['Submitted','Under Review','Accepted','Enrolled'];
+const ADMIN_PIN = '1234';
+let currentTrack = 'All';
+let enrolledCounts = {};
+
+/* ============ RENDER: COURSES ============ */
+function renderTrackTabs(){
+  const opts = ['All', ...TRACKS];
+  document.getElementById('trackTabs').innerHTML = opts.map(t => `
+    <button onclick="setTrack('${t}')" data-track="${t}"
+      class="track-tab px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-full border border-border text-muted hover:text-ink transition-colors ${t===currentTrack?'tab-active':''}">
+      ${t}
+    </button>`).join('');
+}
+function setTrack(t){
+  currentTrack = t;
+  document.querySelectorAll('.track-tab').forEach(b=>b.classList.remove('tab-active'));
+  document.querySelector(`.track-tab[data-track="${t}"]`).classList.add('tab-active');
+  renderCourseList();
+}
+function renderCourseList(){
+  const list = currentTrack==='All' ? COURSES : COURSES.filter(c=>c.track===currentTrack);
+  document.getElementById('courseList').innerHTML = list.map(c => {
+    const filled = enrolledCounts[c.id] || 0;
+    const pct = Math.min(100, Math.round((filled/c.seats)*100));
+    return `
+    <div class="course-card bg-surface border border-border rounded-lg p-6 flex flex-col justify-between">
+      <div>
+        <div class="flex justify-between items-start mb-3">
+          <span class="course-code text-xs text-vertex bg-vertex-tint px-2 py-1 rounded">${c.id}</span>
+          <span class="text-xs text-muted uppercase tracking-wider">${c.level}</span>
+        </div>
+        <h3 class="font-display text-lg text-ink font-bold mb-1">${c.name}</h3>
+        <p class="text-sm text-muted leading-relaxed mb-4">${c.desc}</p>
+        <p class="text-xs text-muted mb-1">${c.duration} • ${c.track}</p>
+        <div class="w-full bg-paper rounded-full h-1.5 my-3 overflow-hidden">
+          <div class="bg-teal h-1.5 rounded-full" style="width:${pct}%"></div>
+        </div>
+        <p class="text-xs text-muted mb-4">${filled}/${c.seats} seats filled</p>
+      </div>
+      <div class="flex justify-between items-center pt-2 border-t border-border">
+        <span class="font-display text-lg text-ink font-bold">PKR ${c.fee.toLocaleString()}</span>
+        <button onclick="openApply('${c.id}')" class="text-xs uppercase tracking-widest bg-ink text-white px-4 py-2 rounded-md hover:bg-vertex transition-all font-semibold">Apply</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function renderInstructors(){
+  document.getElementById('instructorList').innerHTML = INSTRUCTORS.map(i => `
+    <div class="text-center border border-border rounded-lg p-6 bg-paper">
+      <div class="w-16 h-16 rounded-full bg-vertex-tint text-vertex font-display font-bold text-xl flex items-center justify-center mx-auto mb-4">${i.name.split(' ').map(n=>n[0]).join('')}</div>
+      <h4 class="font-display text-base font-bold text-ink mb-1">${i.name}</h4>
+      <p class="text-xs text-vertex font-semibold uppercase tracking-wider mb-2">${i.role}</p>
+      <p class="text-xs text-muted leading-relaxed">${i.bio}</p>
+    </div>`).join('');
+}
+function renderTestimonials(){
+  document.getElementById('testimonialList').innerHTML = TESTIMONIALS.map(t => `
+    <div class="bg-surface border border-border rounded-lg p-6">
+      <i data-lucide="quote" class="w-6 h-6 text-vertex mb-3"></i>
+      <p class="text-sm text-ink leading-relaxed mb-4 italic">"${t.quote}"</p>
+      <p class="text-xs font-semibold text-ink">${t.name}</p>
+      <p class="text-xs text-muted">${t.course}</p>
+    </div>`).join('');
+  lucide.createIcons();
+}
+
+/* ============ APPLICATION DRAWER ============ */
+function populateCourseDropdown(preselect){
+  const sel = document.getElementById('appCourse');
+  sel.innerHTML = COURSES.map(c => `<option value="${c.id}">${c.id} — ${c.name} (PKR ${c.fee.toLocaleString()})</option>`).join('');
+  if(preselect) sel.value = preselect;
+  updateFeeDisplay();
+}
+function updateFeeDisplay(){
+  const course = COURSES.find(c=>c.id===document.getElementById('appCourse').value);
+  document.getElementById('appFee').textContent = 'PKR ' + (course ? course.fee.toLocaleString() : '0');
+}
+function openApply(courseId){
+  document.getElementById('cartOverlay').classList.remove('hidden');
+  requestAnimationFrame(()=>document.getElementById('cartOverlay').style.opacity=1);
+  document.getElementById('applyDrawer').classList.remove('translate-x-full');
+  document.getElementById('applyFormView').classList.remove('hidden');
+  document.getElementById('confirmView').classList.add('hidden');
+  document.getElementById('drawerTitle').textContent = 'Apply Now';
+  populateCourseDropdown(courseId);
+}
+function closeApply(){
+  document.getElementById('cartOverlay').style.opacity=0;
+  document.getElementById('applyDrawer').classList.add('translate-x-full');
+  setTimeout(()=>document.getElementById('cartOverlay').classList.add('hidden'),250);
+}
+document.addEventListener('change', (e)=>{ if(e.target.id==='appCourse') updateFeeDisplay(); });
+
+/* ============ STORAGE ============ */
+function genAppId(){
+  return 'VX' + Date.now().toString(36).toUpperCase().slice(-6) + Math.random().toString(36).slice(2,5).toUpperCase();
+}
+async function submitApplication(e){
+  e.preventDefault();
+  const courseId = document.getElementById('appCourse').value;
+  const course = COURSES.find(c=>c.id===courseId);
+  const app = {
+    id: genAppId(),
+    course: {id: course.id, name: course.name, fee: course.fee},
+    applicant: {
+      name: document.getElementById('appName').value,
+      phone: document.getElementById('appPhone').value,
+      email: document.getElementById('appEmail').value,
+      qualification: document.getElementById('appQualification').value
+    },
+    notes: document.getElementById('appNotes').value || '',
+    status: 'Submitted',
+    createdAt: new Date().toISOString()
+  };
+  try{
+    const res = await window.storage.set('applications:'+app.id, JSON.stringify(app), true);
+    if(!res){ alert('Could not submit your application right now. Please try again.'); return; }
+  }catch(err){
+    alert('Could not submit your application right now. Please try again.');
+    return;
+  }
+  document.getElementById('confirmAppId').textContent = app.id;
+  document.getElementById('applyForm').reset();
+  document.getElementById('applyFormView').classList.add('hidden');
+  document.getElementById('confirmView').classList.remove('hidden');
+  document.getElementById('drawerTitle').textContent = 'Confirmation';
+}
+
+async function getAllApplications(){
+  try{
+    const list = await window.storage.list('applications:', true);
+    if(!list || !list.keys) return [];
+    const apps = [];
+    for(const k of list.keys){
+      try{
+        const r = await window.storage.get(k, true);
+        if(r && r.value) apps.push(JSON.parse(r.value));
+      }catch(e){ /* skip */ }
+    }
+    apps.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt));
+    return apps;
+  }catch(e){ return []; }
+}
+async function refreshSeatCounts(){
+  const all = await getAllApplications();
+  enrolledCounts = {};
+  all.forEach(a => { if(a.status==='Enrolled') enrolledCounts[a.course.id] = (enrolledCounts[a.course.id]||0)+1; });
+  renderCourseList();
+}
+
+/* ============ TRACK APPLICATION ============ */
+function openTracking(){
+  document.getElementById('trackingOverlay').classList.remove('hidden');
+  document.getElementById('trackResults').innerHTML = '';
+  document.getElementById('trackContact').value = '';
+}
+function closeTracking(){ document.getElementById('trackingOverlay').classList.add('hidden'); }
+
+async function lookupApplications(){
+  const contact = document.getElementById('trackContact').value.trim().toLowerCase();
+  const resultsEl = document.getElementById('trackResults');
+  if(!contact){ resultsEl.innerHTML = '<p class="text-muted text-sm text-center">Please enter your phone or email.</p>'; return; }
+  resultsEl.innerHTML = '<p class="text-muted text-sm text-center">Searching...</p>';
+  const all = await getAllApplications();
+  const matches = all.filter(a =>
+    a.applicant.phone.replace(/\s/g,'') === contact.replace(/\s/g,'') ||
+    a.applicant.email.toLowerCase() === contact
+  );
+  if(matches.length===0){
+    resultsEl.innerHTML = '<p class="text-muted text-sm text-center">No applications found for this contact.</p>';
+    return;
+  }
+  resultsEl.innerHTML = matches.map(a => renderAppTrackCard(a)).join('');
+}
+function renderAppTrackCard(a){
+  const idx = STATUSES.indexOf(a.status);
+  const rejected = a.status === 'Rejected';
+  const steps = STATUSES.map((s,i) => `
+    <div class="flex-1 text-center">
+      <div class="w-3 h-3 rounded-full mx-auto mb-1 ${rejected ? 'bg-border' : (i<=idx ? 'bg-vertex' : 'bg-border')}"></div>
+      <p class="text-[10px] uppercase tracking-wider ${i<=idx && !rejected ? 'text-vertex' : 'text-muted'}">${s}</p>
+    </div>`).join('');
+  return `
+    <div class="border border-border rounded-lg p-5">
+      <div class="flex justify-between items-center mb-3">
+        <p class="font-mono text-vertex font-bold text-sm">${a.id}</p>
+        <span class="text-xs px-2 py-1 rounded-md ${rejected?'bg-red-50 text-red-500':'bg-vertex-tint text-vertex'}">${a.status}</span>
+      </div>
+      ${rejected ? '' : `<div class="flex mb-3">${steps}</div>`}
+      <p class="text-xs text-muted mb-1">${a.course.id} — ${a.course.name}</p>
+      <p class="text-xs text-muted">Applied ${new Date(a.createdAt).toLocaleString()}</p>
+      <p class="text-sm text-ink font-semibold mt-2">Fee: PKR ${a.course.fee.toLocaleString()}</p>
+    </div>`;
+}
+
+/* ============ ADMIN ============ */
+let adminStatusFilterVal = 'All';
+function openAdmin(){ document.getElementById('adminOverlay').classList.remove('hidden'); }
+function closeAdmin(){ document.getElementById('adminOverlay').classList.add('hidden'); }
+function checkAdminPin(){
+  const val = document.getElementById('adminPin').value;
+  if(val === ADMIN_PIN){
+    document.getElementById('adminLoginView').classList.add('hidden');
+    document.getElementById('adminDashboard').classList.remove('hidden');
+    renderAdminStatusFilter();
+    loadAdminApplications();
+  } else {
+    alert('Incorrect PIN.');
+  }
+}
+function renderAdminStatusFilter(){
+  const opts = ['All', ...STATUSES, 'Rejected'];
+  document.getElementById('adminStatusFilter').innerHTML = opts.map(s => `
+    <button onclick="setAdminFilter('${s}')" data-filter="${s}"
+      class="admin-filter-btn px-3 py-1.5 text-xs uppercase tracking-wider border rounded-full ${s===adminStatusFilterVal ? 'border-vertex text-vertex' : 'border-border text-muted'}">
+      ${s}
+    </button>`).join('');
+}
+function setAdminFilter(s){ adminStatusFilterVal = s; renderAdminStatusFilter(); loadAdminApplications(); }
+
+async function loadAdminApplications(){
+  const listEl = document.getElementById('adminAppList');
+  const emptyEl = document.getElementById('adminEmptyMsg');
+  listEl.innerHTML = '<p class="text-muted text-sm text-center py-8">Loading applications...</p>';
+  const all = await getAllApplications();
+
+  const today = new Date().toDateString();
+  const todays = all.filter(a => new Date(a.createdAt).toDateString() === today);
+  const pending = all.filter(a => a.status==='Submitted' || a.status==='Under Review');
+  const enrolled = all.filter(a => a.status==='Enrolled');
+  document.getElementById('statTotal').textContent = all.length;
+  document.getElementById('statToday').textContent = todays.length;
+  document.getElementById('statPending').textContent = pending.length;
+  document.getElementById('statEnrolled').textContent = enrolled.length;
+
+  const filtered = adminStatusFilterVal==='All' ? all : all.filter(a=>a.status===adminStatusFilterVal);
+  if(filtered.length===0){ listEl.innerHTML=''; emptyEl.classList.remove('hidden'); return; }
+  emptyEl.classList.add('hidden');
+  listEl.innerHTML = filtered.map(a => `
+    <div class="bg-paper border border-border rounded-lg p-5">
+      <div class="flex flex-wrap justify-between gap-3 mb-3">
+        <div>
+          <p class="font-mono text-vertex font-bold text-sm">${a.id}</p>
+          <p class="text-xs text-muted">${a.applicant.name} • ${a.applicant.phone} • ${a.applicant.email}</p>
+          <p class="text-xs text-muted">${a.course.id} — ${a.course.name}</p>
+        </div>
+        <div class="text-right">
+          <p class="text-xs text-muted mb-1">${new Date(a.createdAt).toLocaleString()}</p>
+          <select onchange="updateAppStatus('${a.id}', this.value)" class="bg-white border border-border text-ink text-xs px-2 py-1.5 rounded-md">
+            ${[...STATUSES,'Rejected'].map(s=>`<option value="${s}" ${s===a.status?'selected':''}>${s}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <p class="text-xs text-muted">Qualification: ${a.applicant.qualification}</p>
+      ${a.notes ? `<p class="text-xs text-muted italic mt-1">Note: ${a.notes}</p>` : ''}
+      <p class="text-sm text-ink font-semibold mt-2">Fee: PKR ${a.course.fee.toLocaleString()}</p>
+    </div>`).join('');
+}
+async function updateAppStatus(id, status){
+  try{
+    const r = await window.storage.get('applications:'+id, true);
+    if(!r) return;
+    const app = JSON.parse(r.value);
+    app.status = status;
+    await window.storage.set('applications:'+id, JSON.stringify(app), true);
+    loadAdminApplications();
+    refreshSeatCounts();
+  }catch(e){
+    alert('Could not update application status. Please try again.');
+  }
+}
+
+/* ============ INIT ============ */
+renderTrackTabs();
+renderCourseList();
+renderInstructors();
+renderTestimonials();
+populateCourseDropdown();
+refreshSeatCounts();
+
+gsap.from(".hero-content", {duration:1.2, y:40, opacity:0, ease:"power3.out", delay:0.1});
+gsap.from(".pathway-node", {duration:0.6, scale:0, opacity:0, stagger:0.1, ease:"back.out(2)", delay:0.5});
+gsap.to(".node-line", {strokeDashoffset:0, duration:1, stagger:0.08, ease:"power2.out", delay:0.3});
+gsap.from(".course-card", {scrollTrigger:{trigger:"#courses", start:"top 80%"}, y:30, opacity:0, duration:0.7, stagger:0.1, ease:"power2.out"});
+
+lucide.createIcons();
+</script>
+</body>
+</html>
